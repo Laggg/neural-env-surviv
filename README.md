@@ -1,13 +1,9 @@
 <div align="center">
   
-![](jupyter_demo/temp_result.gif)
+![](demo/temp_result.gif)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Slack](./jupyter_demo/slack.svg)](https://opendatascience.slack.com/archives/CJW0A6U78/p1632648992121300?thread_ts=1632648992.121300&cid=CJW0A6U78)
 
-[![os](https://img.shields.io/badge/Linux-passing-success)]()
-[![os](https://img.shields.io/badge/MacOS-passing-success)]()
-[![os](https://img.shields.io/badge/Windows-passing-success)]()
 </div>
 
 ## Задача на ODS-хакатон 5.02-20.02
@@ -18,14 +14,8 @@
 5. Энтузиасты уже применили GameGAN к GTA, получив [GANTheftAuto](https://github.com/Sentdex/GANTheftAuto)
 6. После создания модели - нейронного энвайрмента игры, можно обучить RL-агента уже с использованием окружения (научить лутать, правильно двигаться)
 7. Данные есть, сервер для вычислений есть, идеи есть, а рук - не хватает, поэтому - присоединяйтесь
-8. Уже есть некоторые наработки (без применения GameGAN) по нейронному движку (нужно улучшать). Ниже пример одной из моделей, которая возвращает следующий кадр агенту: слева - начальный кадр, справа - некоторая траектория рандомного агента (который случайным образом выбирает направление своего движения)
-<div align="center">
-  
-![](jupyter_demo/neural_engine.gif)
-  
-</div>
+8. Сравнение моделей, которые есть в данный момент:
 
-9. Сравнение моделей, которые есть в данный момент:
 <div align="center">
   
 ![](jupyter_demo/gif_dir6.gif)
