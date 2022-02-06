@@ -18,6 +18,6 @@
 
 <div align="center">
   
-![](jupyter_demo/gif_dir6.gif)
+![](demo/gif_dir6.gif)
   
 </div>
