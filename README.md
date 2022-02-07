@@ -29,7 +29,7 @@
     - Loss = MSE
     - Loss = MSE + PL/100 + 0*Lgan
     - Loss = MAE + PL/100 + 0*Lgan
-    - Loss = 3*MAE + PL/100 + 0*Lgan
+    - Loss = 3*MAE + PL/100 + 0\*Lgan
 <div align="center">
   
 ![](demo/gif_dir6.gif)
