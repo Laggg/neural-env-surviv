@@ -24,12 +24,24 @@
 4. Идея не нова, существует статья/модель [GameGAN](https://nv-tlabs.github.io/gameGAN/) и [Dreamer2](https://youtu.be/o75ybZ-6Uu8?t=2).
 5. Энтузиасты уже применили GameGAN к GTA, получив [GANTheftAuto](https://github.com/Sentdex/GANTheftAuto)
 6. После создания модели - нейронного энвайрмента игры, можно обучить RL-агента уже с использованием окружения (научить лутать, правильно двигаться)
-7. Сравнение генеративных моделей **S_next=model(S_curr,action)**, которые есть в данный момент (самая лучшая - справа):
+7. Сравнение генеративных моделей **S_next=model(S_curr,action)**, без использования GAN (слева направо):
     - кадр старта
     - Loss = 0\*Lgan + MSE
     - Loss = 0\*Lgan + MSE + PL/100
     - Loss = 0\*Lgan + MAE + PL/100
-    - Loss = 0\*Lgan + 3\*MAE + PL/100 (лучшая)
+    - Loss = 0\*Lgan + 3\*MAE + PL/100 (пока самая лучшая)
+
+<div align="center">
+  
+![](demo/gif_dir6.gif)
+![](demo/gif_dir3.gif)
+  
+</div>
+
+8. Сравнение генеративных моделей **S_next=model(S_curr,action)**, с использованием GAN (слева направо):
+    - кадр старта
+    - Loss = Lgan/100 + 3\*MAE + PL/100 (~= pix2pix)
+    - 
 <div align="center">
   
 ![](demo/gif_dir6.gif)
