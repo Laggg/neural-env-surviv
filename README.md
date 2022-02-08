@@ -30,7 +30,6 @@
     - Loss = 0\*Lgan + MSE + PL/100
     - Loss = 0\*Lgan + MAE + PL/100
     - Loss = 0\*Lgan + 3\*MAE + PL/100 (пока самая лучшая)
-
 <div align="center">
   
 ![](demo/gif_dir6.gif)
@@ -41,7 +40,6 @@
 8. Сравнение генеративных моделей **S_next=model(S_curr,action)**, с использованием GAN (слева направо):
     - кадр старта
     - Loss = Lgan/100 + 3\*MAE + PL/100 (~= pix2pix)
-    - 
 <div align="center">
   
 </div>
