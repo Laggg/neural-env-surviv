@@ -44,9 +44,6 @@
     - 
 <div align="center">
   
-![](demo/gif_dir6.gif)
-![](demo/gif_dir3.gif)
-  
 </div>
 
 #### План работ:
