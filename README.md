@@ -39,6 +39,7 @@
 
 8. Сравнение генеративных моделей **S_next=model(S_curr,action)**, с использованием GAN (слева направо):
     - кадр старта
+    - Loss = 0\*Lgan + 3\*MAE + PL/100
     - Loss = Lgan/100 + 3\*MAE + PL/100 (~= pix2pix)
 <div align="center">
   
