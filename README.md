@@ -33,9 +33,10 @@
     - Loss = Lgan/100 + 3\*MAE + PL/100 (~= pix2pix)
  
 <div align="center">
-  
-![](demo/gif_dir6.gif)
+ 
 ![](demo/gif_dir3.gif)
+![](demo/gif_dir6.gif)
+
   
 </div>
 
