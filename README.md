@@ -30,7 +30,7 @@
     - Loss = 0\*Lgan + MSE + PL/100
     - Loss = 0\*Lgan + MAE + PL/100
     - Loss = 0\*Lgan + 3\*MAE + PL/100 (пока самая лучшая)
-    - Loss = Lgan/100 + 3\*MAE + PL/100 (~= pix2pix)
+    - Loss = Lgan/100 + 3\*MAE + PL/100 (pix2pix)
  
 <div align="center">
  
