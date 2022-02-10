@@ -45,7 +45,7 @@
 - [x] 2. pix2pix
 - [ ] 3. GameGan
 - [ ] 4. VQ-VAE
-- [ ] 5. Dreamer1/Dreamer2
+- [ ] 5. Dreamer2
 - [ ] 6. получить VGG (например) backbone, обученный на нашем домене данных в составе AE для улучшения PL_loss
 - [ ] 7. доп. [лоссы](https://www.youtube.com/watch?v=nUjIG41M8fM): /mssim/perceptual path length/texture loss/style loss/ - применимо ли к нашему домену?
 - [ ] 8. **RL** для приближения агента к кустам/камням/луту (в зависимости от качества нейронного движка)
