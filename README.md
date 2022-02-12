@@ -43,8 +43,8 @@
 #### План работ:
 - [x] 1. генеративные модели **без использования GAN** для создания нейронного энвайрмента (см ./demo/gif_dir6.gif и ./demo/gif_dir3.gif)
 - [x] 2. pix2pix
-- [ ] 3. GameGan
-- [ ] 4. VQ-VAE
+- [ ] 3. VQ-VAE
+- [ ] 4. GameGan
 - [ ] 5. Dreamer2
 - [ ] 6. получить VGG (например) backbone, обученный на нашем домене данных в составе AE для улучшения PL_loss
 - [ ] 7. доп. [лоссы](https://www.youtube.com/watch?v=nUjIG41M8fM): /mssim/perceptual path length/texture loss/style loss/ - применимо ли к нашему домену?
