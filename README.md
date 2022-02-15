@@ -22,20 +22,17 @@ cd neural_env_surviv
 ```
 
 1. Create venv:
-   <br/>
-   <br/>
+
+   
    via `conda`:
 
    ```
    conda create -n survivio_venv python=3.8
    conda activate survivio_venv
    ```
-   
-   <br/>
 
    via `python`:
 
-   <br/>
    (Linux)
    
    ```
@@ -49,11 +46,8 @@ cd neural_env_surviv
    source survivio_venv/Scripts/activate
    ```
 
-<br/>
 
 2. Install requirements:
-   <br/>
-<br/>
 
    if you have `GPU`:
    ```
@@ -64,8 +58,6 @@ cd neural_env_surviv
    ```
    pip install -r requirements-cpu.txt
    ```
-
-<br/>
 
 3. And run:
 
