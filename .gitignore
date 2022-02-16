@@ -1,0 +1,17 @@
+__pycache__/
+.venv*
+venv*/
+ENV*/
+.idea/
+.ipynb_checkpoints
+.python-version
+.env
+
+
+*.json
+*.csv
+*.pt
+*.pth
+*.pdf
+*.zip
+*.mkv
