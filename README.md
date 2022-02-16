@@ -23,7 +23,6 @@ cd neural_env_surviv
 
 1. Create venv:
 
-   
    via `conda`:
 
    ```
@@ -33,30 +32,28 @@ cd neural_env_surviv
 
    via `python`:
 
-   (Linux)
-   
    ```
+   // Linux:
    python -m venv survivio_venv
    source survivio_venv/bin/activate
    ```
    
-   (Windows)
    ```
+   // Windows:
    python -m venv survivio_venv
    source survivio_venv/Scripts/activate
    ```
-
 
 2. Install requirements:
 
    if you have `GPU`:
    ```
-   pip install -r requirements-gpu.txt
+   python -m pip install -r requirements-gpu.txt
    ```
    
    if you have `CPU` only:
    ```
-   pip install -r requirements-cpu.txt
+   python -m pip install -r requirements-cpu.txt
    ```
 
 3. And run:
@@ -64,3 +61,5 @@ cd neural_env_surviv
    ```
    python startup.py
    ```
+   
+   You should see a window. Play with `wasd`. To close game - press `e`. 
