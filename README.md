@@ -1,7 +1,7 @@
 <div align="center">
   
-*Данный репо является вспомогательным для [глобального проекта](https://github.com/Laggg/ml-bots-surviv.io) - создать умного ML-бота для браузерной многопользовательской онлайн игры в жанре батл-рояль [surviv.io](https://surviv.io/), за которым было бы интересно наблюдать.*
- 
+*This repo is support for [a global project](https://github.com/Laggg/ml-bots-surviv.io) - to create a smart ML bot for a browser-based multiplayer online game in the genre of battle royale [surviv.io](https://surviv.io/) which would be interesting to watch*  
+  
 </div>
 
 <div align="center">
