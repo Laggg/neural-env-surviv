@@ -1,25 +1,28 @@
 import logging
 import albumentations as A
 import keyboard
+import numpy as np
 import pandas as pd
 import cv2
 import torch
 from albumentations.pytorch import ToTensorV2
 
-from constants import WEIGHTS_DIR, DATA_DIR
-from src.models import ResNetUNet_v2, StoneClassifier
-from src.neural_env import NeuralEnv
+from src.models import ResNetUNetV2, DQN
+from src.neural_env import NeuralEnv, inference_agent, agent_choice
 
-from src.utils import (see_plot, load_image, set_device,
-                       get_next_state, load_stone_classifier, load_resunet_v5)
+from src.utils import (load_image, set_device,
+                       get_next_state, load_resunet_v5)
+
+from constants import WEIGHTS_DIR, DATA_DIR
 
 logging.getLogger().setLevel(logging.INFO)
 
-params = {'DEVICE': 'cuda:0',
-          'BATCH': 1}
+params = {'DEVICE': set_device('cuda:0'),
+          'BATCH': 1,
+          'reward_confidence': 0.95}
 
 # if user really wants to specify device
-params['DEVICE'] = set_device(params['DEVICE'])
+# params['DEVICE'] = set_device(params['DEVICE'])
 
 
 def demo_app():
@@ -27,49 +30,65 @@ def demo_app():
     dg = dg[dg['video'] == 'RU2h8oKpuZA']   # DEBUG
     dg = dg[dg.zoom == 1].reset_index()
 
-    stone_classifier = load_stone_classifier(StoneClassifier(), device=params['DEVICE'])
-    resunet_v5 = load_resunet_v5(ResNetUNet_v2(3), device=params['DEVICE'])
+    users_model = load_resunet_v5(ResNetUNetV2(3), device=params['DEVICE'])
 
     # preprocess data
     i = 10
     p = load_image(dg['video'][i], dg['frame'][i])
-    cv2.imshow('Play the game (wasd)!', cv2.resize(p, (96*4, 96*4), interpolation=cv2.INTER_NEAREST))
+    first_show = np.hstack((p, p))
+    cv2.imshow('Play the game (wasd)!', cv2.resize(first_show[..., ::-1],
+                                                   (96*8, 96*4),
+                                                   interpolation=cv2.INTER_NEAREST))
+    # cv2.waitKey(300)
 
-    sp = dg['sp'][i]
-    zoom = dg['zoom'][i]
-    n = 4
+    sp = torch.tensor([dg['sp'][i]]).to(params['DEVICE'])/100
+    zoom = torch.tensor([dg['zoom'][i]]).to(params['DEVICE'])/15
+    n = torch.tensor([4]).to(params['DEVICE'])/14
 
     train_aug = A.Compose([A.Normalize(mean=(0.5,), std=(0.5,)),
                            ToTensorV2(transpose_mask=False),
                            ])
-    p = train_aug(image=p)['image']
+    p = train_aug(image=p)['image']     # [0, 255] -> [-1, 1] on CPU
 
 
-    # 0. build environment
-    env = NeuralEnv(f'{WEIGHTS_DIR}/resunet_v5.pth',
-                    f'{WEIGHTS_DIR}/nostone_stone_classifier.pth',
-                    params['DEVICE'],
-                    params['BATCH'])
+    # 0. build an environment
+    # env = NeuralEnv(f'{WEIGHTS_DIR}/resunet_v5.pth',
+    #                 f'{WEIGHTS_DIR}/nostone_stone_classifier_v2.pth',
+    #                 params['DEVICE'],
+    #                 params['BATCH'],
+    #                 params['reward_confidence'])
+
+    q_model = DQN()
+    q_model.load_state_dict(torch.load(f'{WEIGHTS_DIR}/dqn_v7.pth'))
+    q_model = q_model.to(params['DEVICE'])
+    q_model.eval()
+
+    p = p.to(params['DEVICE'])
+    p_user = p.clone()
+    p_agent = p.clone()
 
     # 1. start session
-    s_curr, supp_curr = env.reset()
-    print('Init state:', s_curr.size(), supp_curr.size())
+    # s_init, supp_init = env.reset()
+    # s_curr = s_init[0]
+    # supp_curr = supp_init[0]
+    # print('Init state:', f'{s_curr.size()=}, {supp_curr.size()=}')
+
 
     # 2. choose action with some algorithm
-    chosen_action = torch.tensor([1] * params['BATCH']).unsqueeze(1).to(params['DEVICE'])  # 1 = GO UP
-    print('Actions:', chosen_action.size())
+    # chosen_action = torch.tensor([0] * params['BATCH']).to(params['DEVICE'])  # 0 = GO UP
+    # print('Actions:', chosen_action.size())
 
     # 3. get next state with environment
-    s_next, supp_next, reward = env.step(s_curr, supp_curr, chosen_action)
-    print('Next state:', s_next.size(), supp_next.size(), reward.size())
+    # s_next, supp_next, reward = env.step(s_curr, supp_curr, chosen_action)
+    # print('Next state:', s_next.size(), supp_next.size(), reward.size())
 
     # 4. go to [2] and repeat
 
-    for k in range(params['BATCH']):
-        s0 = (s_curr[k].permute(1, 2, 0).detach().cpu() + 1) / 2
-        s1 = (s_next[k].permute(1, 2, 0).detach().cpu() + 1) / 2
-        print('Reward:', reward[k].detach().cpu())
-        print()
+    # for k in range(params['BATCH']):
+    #     s0 = (s_curr[k].permute(1, 2, 0).detach().cpu() + 1) / 2
+    #     s1 = (s_next[k].permute(1, 2, 0).detach().cpu() + 1) / 2
+    #     print('Reward:', reward[k].detach().cpu())
+    #     print()
         # see_plot(torch.cat([s0, s1], dim=1), size=(8, 4))
 
     # these lines below is currently the main game:
@@ -89,37 +108,106 @@ def demo_app():
 
     while True:
         cv2.waitKey(100)
+        color = (255, 255, 255)
+        text = 'UNKNOWN'
 
         if keyboard.is_pressed('e'):
+            color = (55, 255, 255)
+            cv2.putText(game_img, 'PRESSED `e` - closing...', (8, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 1)
+            cv2.imshow('Play the game (wasd)!', game_img)
+            cv2.waitKey(3500)
             exit()
         elif keyboard.is_pressed('w'):
             if keyboard.is_pressed('w+d'):
+                text = 'STRAIGHT+RIGHT'
+                color = (155, 55, 255)
                 direction = directions_map['WD']
             elif keyboard.is_pressed('w+a'):
+                text = 'STRAIGHT+LEFT'
+                color = (155, 55, 255)
                 direction = directions_map['WA']
             else:
+                text = 'STRAIGHT'
+                color = (55, 255, 55)
                 direction = directions_map['W']
 
         elif keyboard.is_pressed('s'):
             if keyboard.is_pressed('s+a'):
+                text = 'DOWN+LEFT'
+                color = (255, 155, 155)
                 direction = directions_map['SA']
             elif keyboard.is_pressed('s+d'):
+                text = 'DOWN+RIGHT'
+                color = (255, 155, 155)
                 direction = directions_map['SD']
             else:
+                text = 'DOWN'
+                color = (55, 255, 55)
                 direction = directions_map['S']
 
         elif keyboard.is_pressed('a'):
+            text = 'LEFT'
+            color = (55, 155, 255)
             direction = directions_map['A']
         elif keyboard.is_pressed('d'):
+            text = 'RIGHT'
+            color = (55, 155, 255)
             direction = directions_map['D']
 
         else:
             continue
 
-        p = get_next_state(resunet_v5, p, direction, sp, zoom, n, device=params['DEVICE'])
+        agent_direction = agent_choice(q_model, p_agent)  # ready on device
+        user_direction = torch.tensor(direction).to(params['DEVICE'])
+        agent_direction = agent_direction.squeeze()
 
-        temp = p.permute(1, 2, 0).detach().cpu().numpy() / 2 + 0.5
-        temp = cv2.resize(temp, (96*4, 96*4), interpolation=cv2.INTER_NEAREST)
 
-        cv2.imshow('Play the game (wasd)!', temp)
+        p_user = get_next_state(users_model, p_user, user_direction, sp, zoom, n)
+        p_agent = get_next_state(users_model, p_agent, agent_direction, sp, zoom, n)
+        # p_user = p_user.permute(1, 2, 0)
+        # p_agent = p_agent.permute(1, 2, 0)
+
+        game_img = torch.cat([p_user.permute(1, 2, 0), p_agent.permute(1, 2, 0)], dim=1).detach().cpu().numpy() / 2 + 0.5
+        game_img = (game_img*255).astype(np.uint8)
+        game_img = cv2.resize(game_img, (96*8, 96*4), interpolation=cv2.INTER_NEAREST)
+        game_img = game_img[..., ::-1]
+
+
+        # s_curr, supp_curr, reward, act = inference_agent(q_model,
+        #                                                  env,
+        #                                                  torch.rot90(s_curr, 0, [1, 2]),
+        #                                                  supp_curr,
+        #                                                  device=params['DEVICE'])
+        # s_current = s_curr.squeeze(0)
+        # q_model_action = list(directions_map.keys())[act]
+
+
+        # img = p.permute(1, 2, 0).detach().cpu().numpy() / 2 + 0.5
+        # img = cv2.resize(img, (96*4, 96*4), interpolation=cv2.INTER_NEAREST)
+        # img = img[..., ::-1]
+        # img = (img*255).astype(np.uint8)
+        #
+        # rectangle = img.copy()
+        # cv2.rectangle(rectangle, (0, 0), (190, 30), (0, 0, 0), -1)
+        # img = cv2.addWeighted(rectangle, 0.6, img, 0.4, 0)
+        # cv2.putText(img, 'Action:', (8, 18), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (255, 255, 255), 1)
+        # cv2.putText(img, text, (80, 18), cv2.FONT_HERSHEY_SIMPLEX, 0.4, color, 1)
+        #
+        # # ----- q_model predictions -----
+        # img_q_model = s_current.permute(1, 2, 0).detach().cpu().numpy() / 2 + 0.5
+        # img_q_model = cv2.resize(img_q_model, (96*4, 96*4), interpolation=cv2.INTER_NEAREST)
+        # img_q_model = img_q_model[..., ::-1]
+        # img_q_model = (img_q_model*255).astype(np.uint8)
+        #
+        # rectangle = img_q_model.copy()
+        # cv2.rectangle(rectangle, (0, 0), (190, 30), (0, 0, 0), -1)
+        # img_q_model = cv2.addWeighted(rectangle, 0.6, img_q_model, 0.4, 0)
+        # cv2.putText(img_q_model, 'Action:', (8, 18), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (255, 255, 255), 1)
+        # cv2.putText(img_q_model, q_model_action, (80, 18), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (255, 255, 255), 1)
+        #
+        # # сделать reset
+        # # сделать rl агента справа (concat)
+        #
+        # game_img = np.hstack((img, img_q_model))
+        cv2.imshow('Play the game (wasd)!', game_img)
         cv2.waitKey(1)
