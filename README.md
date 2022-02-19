@@ -21,7 +21,7 @@ Game [surviv.io](https://surviv.io/) does not have any environment in which it w
 In all our experiments **environment state is the RGB frame**. The development of this technology will allow some designed robots to be trained in cooking/cleaning/repairing with huge video information from YouTube and twitch.
 
 ### Demo App
-We present an interactive demo application to demonstrate the work of a neural engine with the ability to control the movement of the agent by the user. Moreover, in this application, the user can watch the game of a trained RL agent. Main goal our trained agent - to run up to all the stones that fall into his field of vision.
+We present an interactive demo application to demonstrate the work of a neural engine with the ability to control the movement of the agent by the user. Moreover, in this application, the user can watch the game of a trained RL agent. Main goal our bot - to run up to all the stones that fall into his field of vision.
 
 ### DL experiments
 - [x] 1. generative models without GAN
