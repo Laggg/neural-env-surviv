@@ -3,18 +3,17 @@ import os
 import albumentations as A
 import keyboard
 import numpy as np
-import pandas as pd
 import cv2
 import torch
 from albumentations.pytorch import ToTensorV2
 
 from src.models import ResNetUNetV2, DQN, StoneClassifier
-from src.neural_env import NeuralEnv, inference_agent, agent_choice
+from src.neural_env import agent_choice
 
 from src.utils import (load_image, set_device,
                        get_next_state, load_model)
 
-from constants import WEIGHTS_DIR, DATA_DIR
+from constants import DATA_DIR
 
 logging.getLogger().setLevel(logging.INFO)
 
@@ -24,14 +23,9 @@ params = {'DEVICE': set_device('cuda:0'),
 
 
 def demo_app():
-    dg = pd.read_csv(f'{DATA_DIR}/dataset_inventory_v2.csv')
-    dg = dg[dg['video'] == 'RU2h8oKpuZA']   # DEBUG
-    dg = dg[dg.zoom == 1].reset_index()
-
-
     agent_icon = cv2.imread(f'{DATA_DIR}/DefaultSurvivr39.png', cv2.IMREAD_UNCHANGED)
-    agent_icon = cv2.resize(agent_icon, (28, 28), interpolation=cv2.INTER_AREA)
-    agent_mask = np.ones((28, 28, 3))
+    agent_icon = cv2.resize(agent_icon, (24, 24), interpolation=cv2.INTER_AREA)
+    agent_mask = np.ones((24, 24, 3))
     agent_mask[:, :, 0] = agent_icon[:, :, 3]
     agent_mask[:, :, 1] = agent_icon[:, :, 3]
     agent_mask[:, :, 2] = agent_icon[:, :, 3]
@@ -43,13 +37,15 @@ def demo_app():
     stone_classifier = load_model(StoneClassifier(), 'nostone_stone_classifier_v2', device=params['DEVICE'])
 
     # preprocess data
-    i = 10
     init_frame_name = np.random.choice(os.listdir(f'{DATA_DIR}/initial_frames'))
     p = load_image(f'{DATA_DIR}/initial_frames/{init_frame_name}')
-    first_show = np.hstack((p, p))
-    cv2.imshow('Play the game (wasd)!', cv2.resize(first_show[..., ::-1],
-                                                   (96*8, 96*4),
-                                                   interpolation=cv2.INTER_NEAREST))
+
+    first_show = cv2.resize(p[..., ::-1], (96*4, 96*4), interpolation=cv2.INTER_NEAREST)
+    first_show[46*4:52*4, 46*4:52*4, :] = agent_icon[..., ::-1] * agent_mask + \
+                                          first_show[46*4:52*4, 46*4:52*4, :] * (1 - agent_mask)
+    first_show = np.hstack((first_show, first_show))
+
+    cv2.imshow('Play the game (wasd)!', first_show)
     cv2.waitKey(300)
 
     sp = torch.tensor([0]).to(params['DEVICE'])
@@ -81,12 +77,8 @@ def demo_app():
 
     logging.info('Now you can play the game with wasd')
     logging.info('To close the game press "e"')
-    num_steps = 30 * 2
-    close_program = 0
-    while close_program < num_steps:
 
-        # print(k_reader)
-        # time.sleep(0.1)
+    while True:
         color = (255, 255, 255)
         text = 'UNKNOWN'
 
@@ -135,19 +127,17 @@ def demo_app():
 
         else:
             continue
-        close_program += 1
-        print(close_program)
 
         agent_direction = agent_choice(agent_model, p_agent)  # ready on device
         user_direction = torch.tensor(direction).to(params['DEVICE'])
         agent_direction = agent_direction.squeeze()
 
         p_user, r_user = get_next_state(users_model, stone_classifier, p_user,
-                                             user_direction, sp, zoom, n,
-                                             params['reward_confidence'])
+                                        user_direction, sp, zoom, n,
+                                        params['reward_confidence'])
         p_agent, r_agent = get_next_state(users_model, stone_classifier, p_agent,
-                                               agent_direction, sp, zoom, n,
-                                               params['reward_confidence'])
+                                          agent_direction, sp, zoom, n,
+                                          params['reward_confidence'])
 
         reward_user += int(r_user.item())
         reward_agent += int(r_agent.item())
@@ -171,14 +161,11 @@ def demo_app():
         p_agent_img = cv2.addWeighted(rectangle, 0.6, p_agent_img, 0.4, 0)
         cv2.putText(p_agent_img, f'Agent reward: {str(reward_agent)}', (8, 18), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
 
-        p_user_img[44*4:51*4, 44*4:51*4, :] = agent_icon * agent_mask + p_user_img[44*4:51*4, 44*4:51*4, :] * (1 - agent_mask)
-        p_agent_img[44*4:51*4, 44*4:51*4, :] = agent_icon * agent_mask + p_agent_img[44*4:51*4, 44*4:51*4, :] * (1 - agent_mask)
+        p_user_img[46*4:52*4, 46*4:52*4, :] = agent_icon * agent_mask + p_user_img[46*4:52*4, 46*4:52*4, :] * (1 - agent_mask)
+        p_agent_img[46*4:52*4, 46*4:52*4, :] = agent_icon * agent_mask + p_agent_img[46*4:52*4, 46*4:52*4, :] * (1 - agent_mask)
 
         game_img = np.hstack((p_user_img, p_agent_img))
         game_img = game_img[..., ::-1]
 
-        # # сделать reset
-        # # сделать rl агента справа (concat)
-        #
         cv2.imshow('Play the game (wasd)!', game_img)
         cv2.waitKey(1)
