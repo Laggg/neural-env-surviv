@@ -38,9 +38,8 @@
 
 #### План работ:
 - [x] 1. generative models without GAN
-- [x] 2. pix2pix
-- [x] 3. VQ-VAE
-- [ ] 4. GameGan/Dreamer2
-- [x] 5. доп. [лоссы](https://www.youtube.com/watch?v=nUjIG41M8fM): /mssim/perceptual path length/texture loss/style loss/ - применимо ли к нашему домену?
-- [x] 6. **RL** для приближения агента к кустам/камням/луту (в зависимости от качества нейронного движка)
-- [x] 7. интерактивный фронт для взаимодействия человека с нейронным движком (чтобы можно было поиграть игру, движком которой была бы нейронка)
+- [x] 2. generative models with GAN (pix2pix)
+- [x] 3. VQ-VAE/GameGan/Dreamer2 
+- [x] 4. доп. [лоссы](https://www.youtube.com/watch?v=nUjIG41M8fM): /mssim/perceptual path length/texture loss/style loss/ - применимо ли к нашему домену?
+- [x] 5. **RL** для приближения агента к кустам/камням/луту (в зависимости от качества нейронного движка)
+- [x] 6. интерактивный фронт для взаимодействия человека с нейронным движком (чтобы можно было поиграть игру, движком которой была бы нейронка)
