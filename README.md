@@ -27,7 +27,7 @@ We present an interactive demo application to demonstrate the work of a neural e
   <summary>Ubuntu\MacOS installation guides</summary>
   
   #### *Initial usage*
-  __1. Clone GitHub repository__
+  __1. In terminal: clone GitHub repository__
   
   ```
   git clone https://github.com/Laggg/neural_env_surviv
