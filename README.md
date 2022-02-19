@@ -27,7 +27,8 @@ We present an interactive demo application to demonstrate the work of a neural e
   <summary>Windows installation guides</summary>
   
   #### *Initial usage*
-  __1. In anaconda prompt: dowland or clone this GitHub repository__ 
+  __1. In anaconda prompt: dowland or clone this GitHub repository__
+  
   __2. Create python virtual environment and install requirements.txt__
   
   ```
