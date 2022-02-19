@@ -1,5 +1,5 @@
 from scripts.prepare_data import load_data, load_weights
-from survivio_demo import demo_app
+from src.survivio_demo import demo_app
 
 
 # main app
