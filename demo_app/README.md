@@ -1,10 +1,10 @@
 ## Structure of this Repo
 
-- [src](src) : main env engine code
-- [demo_app](demo_app) : playable app
-- [scripts](scripts) : scripts for data downloading
-- [data](data) : downloaded data saved here
-- [weights](weights) : NN weights
+- [src](https://github.com/Laggg/neural_env_surviv/blob/main/src) : main env engine code
+- [demo_app](https://github.com/Laggg/neural_env_surviv/blob/main/demo_app) : playable app
+- [scripts](https://github.com/Laggg/neural_env_surviv/blob/main/scripts) : scripts for data downloading
+- data : downloaded data will be saved here
+- weights : NN weights will be save here
 
 ## Requirements
 
@@ -12,54 +12,54 @@
 - pip
 
 ## Installation & Run
-### From source
 
-Clone the repo and change to the project root directory:
+### Clone the repo and change to the project root directory:
 
 ```
 git clone https://github.com/Laggg/neural_env_surviv.git
 cd neural_env_surviv
 ```
 
-1. Create venv:
 
-   via `conda`:
+### Create venv:
 
-   ```
-   conda create -n survivio_venv python=3.8
-   conda activate survivio_venv
-   ```
+via `conda`:
 
-   via `python`:
+```
+conda create -n survivio_venv python=3.8
+conda activate survivio_venv
+```
 
-   ```
-   // Linux:
-   python -m venv survivio_venv
-   source survivio_venv/bin/activate
-   ```
-   
-   ```
-   // Windows:
-   python -m venv survivio_venv
-   source survivio_venv/Scripts/activate
-   ```
+via `python`:
 
-2. Install requirements:
+```
+// Linux:
+python -m venv survivio_venv
+source survivio_venv/bin/activate
+```
 
-   if you have `GPU`:
-   ```
-   python -m pip install -r requirements-gpu.txt
-   ```
-   
-   if you have `CPU` only:
-   ```
-   python -m pip install -r requirements-cpu.txt
-   ```
+```
+// Windows:
+python -m venv survivio_venv
+source survivio_venv/Scripts/activate
+```
 
-3. And run:
+### Install requirements:
 
-   ```
-   python startup.py
-   ```
-   
-   You should see a window. Play with `wasd`. To close game - press `e`. 
+if you have `CPU`:
+```
+python -m pip install -r requirements-cpu.txt
+```
+
+if you have `CUDA` (haven't tested on Linux so **not recommended**):
+```
+python -m pip install -r requirements-gpu.txt
+```
+
+### And run:
+
+```
+python startup.py
+```
+
+You should see a window. Play with `wasd`. To close game - press `e`. 

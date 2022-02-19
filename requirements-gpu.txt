@@ -8,5 +8,5 @@ torch==1.10.2+cu113
 torchvision==0.11.3+cu113
 matplotlib==3.5.1
 
-googledrivedownloader==0.4
-keyboard
+gdown==4.3.0
+keyboard==0.13.5
