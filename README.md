@@ -11,12 +11,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 </div>
-
-<div align="center">
-  
-## Modeling a neural environment for training an RL-agent based on replays (export trajectories)
-  
-</div>
+ 
+## Modeling a neural environment for training an RL-agent based on expert trajectories (replays)
 
 1. Игра surviv.io не имеет окружения, в котором можно было бы обучить RL-агента. Окружение, оно же environment - функция, принимающая в себя текущее состояние среды и действие агента, а возвращающая - следующее состояние и награду. Т.е. State_next,Reward=ENV(State_curr,Action).
 2. Текущая версия агента получена с помощью алгоритмов offline reinforcement learning, которые не требуют окружения.
