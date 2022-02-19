@@ -14,7 +14,8 @@
 
 ## Neural environment for training an RL-agent by using expert trajectories only
 
-1. Игра surviv.io не имеет окружения, в котором можно было бы обучить RL-агента. Окружение, оно же environment - функция, принимающая в себя текущее состояние среды и действие агента, а возвращающая - следующее состояние и награду. Т.е. State_next,Reward=ENV(State_curr,Action).
+[surviv.io](https://surviv.io/) does not have an environment in which it would be possible to train an RL agent. Environment is a function that gets the current state and the agent's action and returns the next state and reward: state_next,reward=ENV(state_curr,action). That's why we present our neural environment, trained with  100 youtube-videos containing 1.2 million frames (equivalent to ~12 hours of gameplay recordings). Our DL models perform all required functions of the real environment features needed for training RL-agents.
+
 2. Идея - создать модель, выполняющую функции окружения, которая предсказывала бы следующий кадр, если известен текущий кадр и действие агента, т.е. State_next = MODEL(State_curr,Action). Награду отдельно можно захардкодить, это не проблема.
 3. Сравнение генеративных моделей **S_next=model(S_curr,action)** (слева направо):
     - кадр старта
