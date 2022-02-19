@@ -8,7 +8,7 @@ from torchvision.transforms import transforms
 
 from constants import DATA_DIR
 from src.models import ResNetUNetV2, StoneClassifier
-from src.utils import load_image, apply_aug, load_resunet_v5, load_stone_classifier
+from src.utils import load_image, apply_aug, load_model
 
 
 class NeuralEnv:
@@ -46,16 +46,10 @@ class NeuralEnv:
                                           ToTensorV2(transpose_mask=False)])
 
         self.model = ResNetUNetV2(3)
-        self.model = load_resunet_v5(self.model, device=self.device)
-        # self.model.load_state_dict(torch.load(env_model_path, map_location=self.device))
-        # self.model = self.model.to(self.device)
-        # self.model.eval()
+        self.model = load_model(self.model, 'resunet_v5', device=self.device)
 
         self.stone_classifier = StoneClassifier()
-        self.stone_classifier = load_stone_classifier(self.stone_classifier, device=self.device)
-        # self.stone_classifier.load_state_dict(torch.load(reward_model_path, map_location=self.device))
-        # self.stone_classifier = self.stone_classifier.to(self.device)
-        # self.stone_classifier.eval()
+        self.stone_classifier = load_model(self.stone_classifier, 'nostone_stone_classifier_v2.pth', device=self.device)
 
         self.df = pd.read_csv(f'{DATA_DIR}/dataset_inventory_v2.csv')
         self.df = self.df[self.df.zoom == 1].reset_index()

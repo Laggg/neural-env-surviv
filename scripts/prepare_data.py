@@ -37,6 +37,11 @@ def load_weights(weights_dir=WEIGHTS_DIR) -> None:
         path=str(weights_dir / 'resunet_v5.pth'),
         md5='c6bd42cbdc2951193f9e9213ac006217'
     )
+    gdown.cached_download(
+        id='1YRTX84ea-ley7o6CGqp3q9yDpNdczBRv',
+        path=str(weights_dir / 'dqn_v7.pth'),
+        md5='d14f43eb8f27e60cff7d58d164598527',
+    )
 
 
 if __name__ == '__main__':

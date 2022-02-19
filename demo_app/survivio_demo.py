@@ -11,7 +11,7 @@ from src.models import ResNetUNetV2, DQN
 from src.neural_env import NeuralEnv, inference_agent, agent_choice
 
 from src.utils import (load_image, set_device,
-                       get_next_state, load_resunet_v5)
+                       get_next_state, load_model)
 
 from constants import WEIGHTS_DIR, DATA_DIR
 
@@ -21,16 +21,14 @@ params = {'DEVICE': set_device('cuda:0'),
           'BATCH': 1,
           'reward_confidence': 0.95}
 
-# if user really wants to specify device
-# params['DEVICE'] = set_device(params['DEVICE'])
-
 
 def demo_app():
     dg = pd.read_csv(f'{DATA_DIR}/dataset_inventory_v2.csv')
     dg = dg[dg['video'] == 'RU2h8oKpuZA']   # DEBUG
     dg = dg[dg.zoom == 1].reset_index()
 
-    users_model = load_resunet_v5(ResNetUNetV2(3), device=params['DEVICE'])
+    users_model = load_model(ResNetUNetV2(3), 'resunet_v5', device=params['DEVICE'])
+    agent_model = load_model(DQN(), 'dqn_v7', device=params['DEVICE'])
 
     # preprocess data
     i = 10
@@ -39,7 +37,6 @@ def demo_app():
     cv2.imshow('Play the game (wasd)!', cv2.resize(first_show[..., ::-1],
                                                    (96*8, 96*4),
                                                    interpolation=cv2.INTER_NEAREST))
-    # cv2.waitKey(300)
 
     sp = torch.tensor([dg['sp'][i]]).to(params['DEVICE'])/100
     zoom = torch.tensor([dg['zoom'][i]]).to(params['DEVICE'])/15
@@ -49,47 +46,9 @@ def demo_app():
                            ToTensorV2(transpose_mask=False),
                            ])
     p = train_aug(image=p)['image']     # [0, 255] -> [-1, 1] on CPU
-
-
-    # 0. build an environment
-    # env = NeuralEnv(f'{WEIGHTS_DIR}/resunet_v5.pth',
-    #                 f'{WEIGHTS_DIR}/nostone_stone_classifier_v2.pth',
-    #                 params['DEVICE'],
-    #                 params['BATCH'],
-    #                 params['reward_confidence'])
-
-    q_model = DQN()
-    q_model.load_state_dict(torch.load(f'{WEIGHTS_DIR}/dqn_v7.pth'))
-    q_model = q_model.to(params['DEVICE'])
-    q_model.eval()
-
     p = p.to(params['DEVICE'])
     p_user = p.clone()
     p_agent = p.clone()
-
-    # 1. start session
-    # s_init, supp_init = env.reset()
-    # s_curr = s_init[0]
-    # supp_curr = supp_init[0]
-    # print('Init state:', f'{s_curr.size()=}, {supp_curr.size()=}')
-
-
-    # 2. choose action with some algorithm
-    # chosen_action = torch.tensor([0] * params['BATCH']).to(params['DEVICE'])  # 0 = GO UP
-    # print('Actions:', chosen_action.size())
-
-    # 3. get next state with environment
-    # s_next, supp_next, reward = env.step(s_curr, supp_curr, chosen_action)
-    # print('Next state:', s_next.size(), supp_next.size(), reward.size())
-
-    # 4. go to [2] and repeat
-
-    # for k in range(params['BATCH']):
-    #     s0 = (s_curr[k].permute(1, 2, 0).detach().cpu() + 1) / 2
-    #     s1 = (s_next[k].permute(1, 2, 0).detach().cpu() + 1) / 2
-    #     print('Reward:', reward[k].detach().cpu())
-    #     print()
-        # see_plot(torch.cat([s0, s1], dim=1), size=(8, 4))
 
     # these lines below is currently the main game:
     directions_map = {
@@ -157,15 +116,12 @@ def demo_app():
         else:
             continue
 
-        agent_direction = agent_choice(q_model, p_agent)  # ready on device
+        agent_direction = agent_choice(agent_model, p_agent)  # ready on device
         user_direction = torch.tensor(direction).to(params['DEVICE'])
         agent_direction = agent_direction.squeeze()
 
-
         p_user = get_next_state(users_model, p_user, user_direction, sp, zoom, n)
         p_agent = get_next_state(users_model, p_agent, agent_direction, sp, zoom, n)
-        # p_user = p_user.permute(1, 2, 0)
-        # p_agent = p_agent.permute(1, 2, 0)
 
         game_img = torch.cat([p_user.permute(1, 2, 0), p_agent.permute(1, 2, 0)], dim=1).detach().cpu().numpy() / 2 + 0.5
         game_img = (game_img*255).astype(np.uint8)

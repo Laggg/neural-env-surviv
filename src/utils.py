@@ -36,18 +36,11 @@ def load_image(video, frame):
     return p[:, :, ::-1]
 
 
-def load_resunet_v5(resunet_v5, device='cpu'):
-    resunet_v5.load_state_dict(torch.load(f'{WEIGHTS_DIR}/resunet_v5.pth', map_location=device))
-    resunet_v5 = resunet_v5.to(device)
-    resunet_v5.eval();
-    return resunet_v5
-
-
-def load_stone_classifier(stone_classifier, device='cpu'):
-    stone_classifier.load_state_dict(torch.load(f'{WEIGHTS_DIR}/nostone_stone_classifier_v2.pth', map_location=device))
-    stone_classifier = stone_classifier.to(device)
-    stone_classifier.eval();
-    return stone_classifier
+def load_model(model, model_name, device='cpu'):
+    model.load_state_dict(torch.load(f'{WEIGHTS_DIR}/{model_name}.pth'))
+    model = model.to(device)
+    model.eval()
+    return model
 
 
 def apply_aug(p0, aug):
