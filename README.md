@@ -37,7 +37,7 @@
 </div>
 
 #### План работ:
-- [x] 1. генеративные модели **без использования GAN** для создания нейронного энвайрмента (см ./demo/gif_dir6.gif и ./demo/gif_dir3.gif)
+- [x] 1. generative models without GAN
 - [x] 2. pix2pix
 - [x] 3. VQ-VAE
 - [ ] 4. GameGan/Dreamer2
