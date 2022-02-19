@@ -23,7 +23,7 @@ params = {'DEVICE': set_device('cuda:0'),
 
 
 def demo_app():
-    agent_icon = cv2.imread(f'{DATA_DIR}/DefaultSurvivr39.png', cv2.IMREAD_UNCHANGED)
+    agent_icon = cv2.imread(f'{DATA_DIR}/assets/DefaultSurvivr39.png', cv2.IMREAD_UNCHANGED)
     agent_icon = cv2.resize(agent_icon, (24, 24), interpolation=cv2.INTER_AREA)
     agent_mask = np.ones((24, 24, 3))
     agent_mask[:, :, 0] = agent_icon[:, :, 3]

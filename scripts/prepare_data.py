@@ -4,14 +4,6 @@ from constants import DATA_DIR, WEIGHTS_DIR
 
 
 def load_data(data_dir=DATA_DIR) -> None:
-    if not os.path.exists(str(data_dir / 'sample_rgb_96')):
-        gdown.cached_download(
-            id='1Fnn0F3Y0D_3oFaeRQq4umKllXdt-OITd',
-            path=str(data_dir / 'sample_rgb_96.zip'),
-            md5='a99a6885ea4d3de29e5f31fffb9a4fd0',
-            postprocess=gdown.extractall
-        )
-
     if os.path.exists(str(data_dir / 'sample_rgb_96.zip')):
         os.remove(str(data_dir / 'sample_rgb_96.zip'))
 
