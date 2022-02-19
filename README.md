@@ -21,7 +21,7 @@ Game [surviv.io](https://surviv.io/) does not have any environment in which it w
 In all our experiments **environment state is the RGB frame**. The development of this technology will allow some designed robots to be trained in cooking/cleaning/repairing with huge video information from YouTube and twitch.
 
 ### Demo App
-We present an interactive demo application to demonstrate the work of a neural engine with the ability to control the movement of the agent by the user. Moreover, in this application, the user can watch the game of a trained RL agent. Main goal our bot - to run up to all the stones that fall into his field of vision.
+We present an interactive demo application to demonstrate the work of a neural engine with the ability to control the movement of the agent by the user. Moreover, in this application, the user can watch the game of a trained RL agent. Main goal our bot - to run up to all the stones that fall into his field of vision. Anyone can run interactive demo application on their machine (see below installation guides).
 
 <details>
   <summary>Ubuntu\MacOS installation guides</summary>
@@ -30,33 +30,18 @@ We present an interactive demo application to demonstrate the work of a neural e
   __1. Clone GitHub repository__
   
   ```
-  git clone https://github.com/Laggg/ml-bots-surviv.io
+  git clone https://github.com/Laggg/neural_env_surviv
   ```
-
-  __2. Download supporting files__
-
-  Download model weights from [here](https://drive.google.com/u/0/uc?id=1l3exfxwT4ZVk1R6V2sxZimTafx1EkNtO&export=download) and chromedriver, that suits your chrome version, from [here](https://chromedriver.chromium.org/downloads) (unzip it, if needed). 
-
-  Locate both files to `./supporting_files/` folder.
-
-  >![image](https://user-images.githubusercontent.com/45121687/134784821-bc12faad-c00f-44de-95d9-af4b6a9e0b34.png)
   
-  __3. Create python virtual environment and install requirements.txt__
+  __2. Create python virtual environment and install requirements.txt__
   
   ```
-  cd ml-bots-surviv.io
-  python -m venv surviv_env 
-  source surviv_env/bin/activate
-  pip install -r requirements.txt 
+  cd neural_env_surviv
+  python -m venv survivio_venv
+  source survivio_venv/bin/activate
+  python -m pip install -r requirements.txt
   ```
-  <details>
-    <summary>possible issues: </summary>
-    
-    Issue: Could not build wheels for opencv-python which use PEP 517 and cannot be installed directly
-    Solution: `pip install --upgrade pip setuptools wheel`
-  </details>
-
-
+  
   __4. Run the agent__
   ```
   python play.py
