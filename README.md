@@ -36,7 +36,7 @@ In all our experiments **environment state is the RGB frame**. The development o
   - Loss = 0\*Lgan + MSE
   - Loss = 0\*Lgan + MSE + PL/100
   - Loss = 0\*Lgan + MAE + PL/100
-  - Loss = 0\*Lgan + 3\*MAE + PL/100 (пока самая лучшая)
+  - Loss = 0\*Lgan + 3\*MAE + PL/100 (best, in DemoApp)
   - Loss = Lgan/100 + 3\*MAE + PL/100 (pix2pix)
  
 <div align="center">
