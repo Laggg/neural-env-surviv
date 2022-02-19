@@ -1,34 +1,28 @@
 import os
-from google_drive_downloader import GoogleDriveDownloader as gdd
+import gdown
 from constants import DATA_DIR, WEIGHTS_DIR
 
 
 def load_data(data_dir=DATA_DIR) -> None:
-    gdd.download_file_from_google_drive(
-        file_id='1KlOTV_lyv85EozJS9GZfZsMjTaVX_Smq',
-        dest_path=str(data_dir / 'dataset_for_moving.csv')
-    )
-    gdd.download_file_from_google_drive(
-        file_id='1hB2IMk5oExIbIMUzUXYD6dUxSOwOX4Jr',
-        dest_path=str(data_dir / 'dataset_inventory_v2.csv')
-    )
-    gdd.download_file_from_google_drive(
-        file_id='1Fnn0F3Y0D_3oFaeRQq4umKllXdt-OITd',
-        dest_path=str(data_dir / 'sample_rgb_96.zip'),
-        unzip=True
-    )
-
-    os.remove(str(data_dir / 'sample_rgb_96.zip'))
+    if os.path.exists(str(data_dir / 'sample_rgb_96.zip')):
+        os.remove(str(data_dir / 'sample_rgb_96.zip'))
 
 
 def load_weights(weights_dir=WEIGHTS_DIR) -> None:
-    gdd.download_file_from_google_drive(
-        file_id='1uevD6lfB1QuyxbCUOX6SivHiYRQ75_jZ',
-        dest_path=str(weights_dir / 'nostone_stone_classifier.pth')
+    gdown.cached_download(
+        id='1NxlyI7Keh3ItvhZ1Yyh9gmM021mw5f-K',
+        path=str(weights_dir / 'nostone_stone_classifier_v2.pth'),
+        md5='11e2cebe581babc7dcfe53af6204eb22',
     )
-    gdd.download_file_from_google_drive(
-        file_id='19dpmEkmoyw1z9Y-Xm_BG8-ZrteNhnw5Q',
-        dest_path=str(weights_dir / 'resunet_v5.pth')
+    gdown.cached_download(
+        id='19dpmEkmoyw1z9Y-Xm_BG8-ZrteNhnw5Q',
+        path=str(weights_dir / 'resunet_v5.pth'),
+        md5='c6bd42cbdc2951193f9e9213ac006217'
+    )
+    gdown.cached_download(
+        id='1YRTX84ea-ley7o6CGqp3q9yDpNdczBRv',
+        path=str(weights_dir / 'dqn_v7.pth'),
+        md5='d14f43eb8f27e60cff7d58d164598527',
     )
 
 

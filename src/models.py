@@ -12,7 +12,7 @@ def convrelu(in_channels, out_channels, kernel, padding):
     )
 
 
-class ResNetUNet_v2(nn.Module):
+class ResNetUNetV2(nn.Module):
     def __init__(self, n_class):
         super().__init__()
 
@@ -90,8 +90,6 @@ class ResNetUNet_v2(nn.Module):
         return out
 
 
-# ====================================================================
-
 class StoneClassifier(nn.Module):
     def __init__(self):
         super().__init__()
@@ -108,4 +106,24 @@ class StoneClassifier(nn.Module):
         x = torch.flatten(x, 1)
         x = F.relu(self.fc1(x))
         x = F.softmax(self.fc3(x), dim=1)
+        return x
+
+
+class DQN(nn.Module):
+    def __init__(self):
+        super().__init__()
+
+        self.conv1 = nn.Conv2d(3, 8, 3, 2, 1)
+        self.conv2 = nn.Conv2d(8, 16, 3, 2, 1)
+        self.conv3 = nn.Conv2d(16, 32, 3, 2, 1)
+        self.linear1 = nn.Linear(32 * 12 * 12, 256)
+        self.linear2 = nn.Linear(256, 8)
+
+    def forward(self, x):
+        x = F.relu(self.conv1(x))
+        x = F.relu(self.conv2(x))
+        x = F.relu(self.conv3(x))
+        x = F.relu(self.linear1(torch.flatten(x, 1)))
+        x = self.linear2(x)
+        x = F.softmax(x, dim=1)
         return x
