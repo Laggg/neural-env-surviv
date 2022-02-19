@@ -177,9 +177,9 @@ def demo_app():
         # -------------------
 
         rectangle = p_agent_img.copy()
-        cv2.rectangle(rectangle, (0, 0), (190, 30), (0, 0, 0), -1)
+        cv2.rectangle(rectangle, (0, 0), (210, 30), (0, 0, 0), -1)
         p_agent_img = cv2.addWeighted(rectangle, 0.6, p_agent_img, 0.4, 0)
-        cv2.putText(p_agent_img, f'Agent reward: {str(reward_agent)}', (8, 18), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+        cv2.putText(p_agent_img, f'RL agent reward: {str(reward_agent)}', (8, 18), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
 
         p_user_img[46*4:52*4, 46*4:52*4, :] = agent_icon * agent_mask + p_user_img[46*4:52*4, 46*4:52*4, :] * (1 - agent_mask)
         p_agent_img[46*4:52*4, 46*4:52*4, :] = agent_icon * agent_mask + p_agent_img[46*4:52*4, 46*4:52*4, :] * (1 - agent_mask)
