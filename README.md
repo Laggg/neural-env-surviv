@@ -23,10 +23,8 @@ In all our experiments **environment state is the RGB frame**. The development o
 ### Demo App
 We present an interactive demo application to demonstrate the work of a neural engine with the ability to control the movement of the agent by the user. Moreover, in this application, the user can watch the game of a trained RL agent. Main goal our bot - to run up to all the stones that fall into his field of vision.
 
-# Installation guides
-
 <details>
-  <summary>Ubuntu\MacOS</summary>
+  <summary>Ubuntu\MacOS installation guides</summary>
   
   ## Initial usage
   __1. Clone GitHub repository__
