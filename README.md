@@ -24,7 +24,14 @@ In all our experiments **environment state is the RGB frame**. The development o
 ...
 
 ### DL experiments
-3. Сравнение генеративных моделей **S_next=model(S_curr,action)** (слева направо):
+- [x] 1. generative models without GAN
+- [x] 2. generative models with GAN (pix2pix)
+- [x] 3. VQ-VAE/[GameGAN](https://nv-tlabs.github.io/gameGAN/)/[Dreamer2](https://youtu.be/o75ybZ-6Uu8?t=2)
+- [x] 4. additional [losses](https://www.youtube.com/watch?v=nUjIG41M8fM), /mssim/style-texture loss/perceptual path length/
+- [x] 5. **RL** для приближения агента к кустам/камням/луту (в зависимости от качества нейронного движка)
+- [x] 6. интерактивный фронт для взаимодействия человека с нейронным движком (чтобы можно было поиграть игру, движком которой была бы нейронка)
+
+Сравнение генеративных моделей **S_next=model(S_curr,action)** (слева направо):
     - кадр старта
     - Loss = 0\*Lgan + MSE
     - Loss = 0\*Lgan + MSE + PL/100
@@ -37,13 +44,4 @@ In all our experiments **environment state is the RGB frame**. The development o
 ![](demo/gif_dir3.gif)
 ![](demo/gif_dir6.gif)
 
-  
 </div>
-
-#### План работ:
-- [x] 1. generative models without GAN
-- [x] 2. generative models with GAN (pix2pix)
-- [x] 3. VQ-VAE/[GameGAN](https://nv-tlabs.github.io/gameGAN/)/[Dreamer2](https://youtu.be/o75ybZ-6Uu8?t=2)
-- [x] 4. additional [losses](https://www.youtube.com/watch?v=nUjIG41M8fM), /mssim/style-texture loss/perceptual path length/
-- [x] 5. **RL** для приближения агента к кустам/камням/луту (в зависимости от качества нейронного движка)
-- [x] 6. интерактивный фронт для взаимодействия человека с нейронным движком (чтобы можно было поиграть игру, движком которой была бы нейронка)
