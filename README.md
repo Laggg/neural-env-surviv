@@ -14,9 +14,12 @@
 
 ## Neural environment for training an RL-agent by using expert trajectories only
 
-[surviv.io](https://surviv.io/) does not have any environment in which it would be possible to train an RL agent. Environment is a function that gets the current state and the agent's action and returns the next state and reward: **state_next,reward=ENV(state_curr,action)**. That's why we present our neural environment, trained with  100 youtube-videos containing 1.2 million frames (equivalent to ~12 hours of gameplay recordings). Our DL models perform all required functions of the real environment features needed for training RL-agents.
+[surviv.io](https://surviv.io/) does not have any environment in which it would be possible to train an RL agent. Environment is a function that gets the current state and the agent's action and returns the next state and reward: **state_next,reward=ENV(state_curr,action)**. That's why we present our neural environment, trained with  100 youtube-videos containing 1.2 million frames (equivalent to ~12 hours of gameplay recordings).
 
-2. Идея - создать модель, выполняющую функции окружения, которая предсказывала бы следующий кадр, если известен текущий кадр и действие агента, т.е. State_next = MODEL(State_curr,Action). Награду отдельно можно захардкодить, это не проблема.
+Our DL models perform all required features of the real game environment needed for training RL-agents locomotion. For an example of using a neural environment, we present a trained DN RL agent who aims to run up to all the stones that fall into his field of vision. We will use this proof-of-concept technology to train our agent to loot vital items.
+
+In all our experiments **environment state is the RGB frame**. The development of this technology will allow some designed robots to be trained in cooking/cleaning/repairing with huge video information from YouTube and twitch.
+
 3. Сравнение генеративных моделей **S_next=model(S_curr,action)** (слева направо):
     - кадр старта
     - Loss = 0\*Lgan + MSE
