@@ -21,9 +21,47 @@ Game [surviv.io](https://surviv.io/) does not have any environment in which it w
 In all our experiments **environment state is the RGB frame**. The development of this technology will allow some designed robots to be trained in cooking/cleaning/repairing with huge video information from YouTube and twitch.
 
 ### Demo App
-We present an interactive demo application to demonstrate the work of a neural engine with the ability to control the movement of the agent by the user. Moreover, in this application, the user can watch the game of a trained RL agent. Main goal our bot - to run up to all the stones that fall into his field of vision.
+We present an interactive demo application to demonstrate the work of a neural engine with the ability to control the movement of the agent by the user. Moreover, in this application, the user can watch the game of a trained RL agent. Main goal our bot - to run up to all the stones that fall into his field of vision. Anyone can run interactive demo application on their machine (see below installation guides).
 
-### DL experiments
+<details>
+  <summary>Ubuntu\MacOS installation guides</summary>
+  
+  #### *Initial usage*
+  __1. In terminal: clone GitHub repository__
+  
+  ```
+  git clone https://github.com/Laggg/neural_env_surviv
+  ```
+  
+  __2. Create python virtual environment and install requirements.txt__
+  
+  ```
+  cd neural_env_surviv
+  python -m venv survivio_venv
+  source survivio_venv/bin/activate
+  python -m pip install -r requirements.txt
+  ```
+  
+  __3. Run the agent__
+  ```
+  python run_demo.py
+  ```
+  
+  #### *Later usage*
+  __1. Activate python environment__
+  ```
+  source survivio_venv/bin/activate
+  ``` 
+
+  __2. Run the agent__
+  ```
+  python run_demo.py
+  ```
+</details>
+
+### Our DL experiments
+<details>
+  <summary>experiments demo</summary>
 - [x] 1. generative models without GAN
 - [x] 2. generative models with GAN (pix2pix)
 - [x] 3. VQ-VAE/[GameGAN](https://nv-tlabs.github.io/gameGAN/)/[Dreamer2](https://youtu.be/o75ybZ-6Uu8?t=2)
@@ -45,3 +83,4 @@ We present an interactive demo application to demonstrate the work of a neural e
 ![](demo/gif_dir6.gif)
 
 </div>
+</details>
