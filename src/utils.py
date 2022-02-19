@@ -30,9 +30,9 @@ def see_plot(pict, size=(6, 6), title: str = None):
     plt.show()
 
 
-def load_image(video, frame):
-    path_to_video = f'{DATA_DIR}/sample_rgb_96/{video}/'
-    path_to_frame = f'{path_to_video}/f_{frame}.jpg'
+def load_image(path_to_frame):
+    # path_to_video = f'{DATA_DIR}/sample_rgb_96/{video}/'
+    # path_to_frame = f'{path_to_video}/f_{frame}.jpg'
     p = cv2.imread(path_to_frame)
     return p[:, :, ::-1]
 

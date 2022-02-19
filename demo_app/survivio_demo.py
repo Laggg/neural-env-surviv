@@ -1,4 +1,5 @@
 import logging
+import os
 import albumentations as A
 import keyboard
 import numpy as np
@@ -27,9 +28,15 @@ def demo_app():
     dg = dg[dg['video'] == 'RU2h8oKpuZA']   # DEBUG
     dg = dg[dg.zoom == 1].reset_index()
 
-    agent_icon = cv2.imread(f'{DATA_DIR}/DefaultSurvivr39.png')
-    cv2.imshow()
 
+    agent_icon = cv2.imread(f'{DATA_DIR}/DefaultSurvivr39.png', cv2.IMREAD_UNCHANGED)
+    agent_icon = cv2.resize(agent_icon, (28, 28), interpolation=cv2.INTER_AREA)
+    agent_mask = np.ones((28, 28, 3))
+    agent_mask[:, :, 0] = agent_icon[:, :, 3]
+    agent_mask[:, :, 1] = agent_icon[:, :, 3]
+    agent_mask[:, :, 2] = agent_icon[:, :, 3]
+    agent_mask = agent_mask / 255.
+    agent_icon = agent_icon[:, :, 0:3][:, :, ::-1]
 
     users_model = load_model(ResNetUNetV2(3), 'resunet_v5', device=params['DEVICE'])
     agent_model = load_model(DQN(), 'dqn_v7', device=params['DEVICE'])
@@ -37,15 +44,17 @@ def demo_app():
 
     # preprocess data
     i = 10
-    p = load_image(dg['video'][i], dg['frame'][i])
+    init_frame_name = np.random.choice(os.listdir(f'{DATA_DIR}/initial_frames'))
+    p = load_image(f'{DATA_DIR}/initial_frames/{init_frame_name}')
     first_show = np.hstack((p, p))
     cv2.imshow('Play the game (wasd)!', cv2.resize(first_show[..., ::-1],
                                                    (96*8, 96*4),
                                                    interpolation=cv2.INTER_NEAREST))
+    cv2.waitKey(300)
 
-    sp = torch.tensor([dg['sp'][i]]).to(params['DEVICE'])/100
-    zoom = torch.tensor([dg['zoom'][i]]).to(params['DEVICE'])/15
-    n = torch.tensor([4]).to(params['DEVICE'])/14
+    sp = torch.tensor([0]).to(params['DEVICE'])
+    zoom = torch.tensor([1]).to(params['DEVICE'])/15
+    n = torch.tensor([2]).to(params['DEVICE'])/14
 
     reward_user = 0
     reward_agent = 0
@@ -72,8 +81,11 @@ def demo_app():
 
     logging.info('Now you can play the game with wasd')
     logging.info('To close the game press "e"')
+    num_steps = 30 * 2
+    close_program = 0
+    while close_program < num_steps:
 
-    while True:
+        # print(k_reader)
         # time.sleep(0.1)
         color = (255, 255, 255)
         text = 'UNKNOWN'
@@ -123,6 +135,8 @@ def demo_app():
 
         else:
             continue
+        close_program += 1
+        print(close_program)
 
         agent_direction = agent_choice(agent_model, p_agent)  # ready on device
         user_direction = torch.tensor(direction).to(params['DEVICE'])
@@ -157,8 +171,9 @@ def demo_app():
         p_agent_img = cv2.addWeighted(rectangle, 0.6, p_agent_img, 0.4, 0)
         cv2.putText(p_agent_img, f'Agent reward: {str(reward_agent)}', (8, 18), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
 
-        p_user_img[46*4:50*4, 46*4:50*4, :] = np.ones((4*4, 4*4, 3)).astype(np.uint8) * 255
-        p_agent_img[46*4:50*4, 46*4:50*4, :] = np.ones((4*4, 4*4, 3)).astype(np.uint8) * 255
+        p_user_img[44*4:51*4, 44*4:51*4, :] = agent_icon * agent_mask + p_user_img[44*4:51*4, 44*4:51*4, :] * (1 - agent_mask)
+        p_agent_img[44*4:51*4, 44*4:51*4, :] = agent_icon * agent_mask + p_agent_img[44*4:51*4, 44*4:51*4, :] * (1 - agent_mask)
+
         game_img = np.hstack((p_user_img, p_agent_img))
         game_img = game_img[..., ::-1]
 
