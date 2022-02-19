@@ -1,0 +1,12 @@
+-f https://download.pytorch.org/whl/cu113/torch_stable.html
+requests
+pandas==1.4.1
+opencv-python==4.5.5.62
+opencv-contrib-python==4.5.5.62
+albumentations==1.1.0
+torch==1.10.2+cu113
+torchvision==0.11.3+cu113
+matplotlib==3.5.1
+
+googledrivedownloader==0.4
+keyboard
