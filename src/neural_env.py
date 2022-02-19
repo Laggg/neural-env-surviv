@@ -1,5 +1,4 @@
 import numpy as np
-import pandas as pd
 import albumentations as A
 import torch
 import torch.nn.functional as F
@@ -163,6 +162,3 @@ def inference_agent(model, env, s_init, supp_init, device='cpu'):
     s_curr, supp_curr, reward = env.step(s_curr, supp_curr, act)
 
     return s_curr, supp_curr, reward, act
-
-
-

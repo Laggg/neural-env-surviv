@@ -21,6 +21,12 @@ params = {'DEVICE': set_device('cuda:0'),
           'BATCH': 1,
           'reward_confidence': 0.95}
 
+import platform
+if 'wind' in platform.architecture()[1].lower():
+    is_it_windows = True
+else:
+    is_it_windows = False
+
 
 def demo_app():
     agent_icon = cv2.imread(f'{DATA_DIR}/assets/DefaultSurvivr39.png', cv2.IMREAD_UNCHANGED)
@@ -82,54 +88,60 @@ def demo_app():
         color = (255, 255, 255)
         text = 'UNKNOWN'
 
-        if keyboard.is_pressed('e'):
-            color = (55, 255, 255)
-            cv2.putText(game_img, 'PRESSED `e` - closing...', (8, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 1)
-            cv2.imshow('Play the game (wasd)!', game_img)
-            cv2.waitKey(3500)
-            exit()
-        elif keyboard.is_pressed('w'):
-            if keyboard.is_pressed('w+d'):
-                text = 'STRAIGHT+RIGHT'
-                color = (155, 55, 255)
-                direction = directions_map['WD']
-            elif keyboard.is_pressed('w+a'):
-                text = 'STRAIGHT+LEFT'
-                color = (155, 55, 255)
-                direction = directions_map['WA']
+        if is_it_windows:
+            if keyboard.is_pressed('e'):
+                color = (55, 255, 255)
+                cv2.putText(game_img, 'PRESSED `e` - closing...', (8, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 1)
+                cv2.imshow('Play the game (wasd)!', game_img)
+                cv2.waitKey(3500)
+                exit()
+            elif keyboard.is_pressed('w'):
+                if keyboard.is_pressed('w+d'):
+                    text = 'STRAIGHT+RIGHT'
+                    color = (155, 55, 255)
+                    direction = directions_map['WD']
+                elif keyboard.is_pressed('w+a'):
+                    text = 'STRAIGHT+LEFT'
+                    color = (155, 55, 255)
+                    direction = directions_map['WA']
+                else:
+                    text = 'STRAIGHT'
+                    color = (55, 255, 55)
+                    direction = directions_map['W']
+
+            elif keyboard.is_pressed('s'):
+                if keyboard.is_pressed('s+a'):
+                    text = 'DOWN+LEFT'
+                    color = (255, 155, 155)
+                    direction = directions_map['SA']
+                elif keyboard.is_pressed('s+d'):
+                    text = 'DOWN+RIGHT'
+                    color = (255, 155, 155)
+                    direction = directions_map['SD']
+                else:
+                    text = 'DOWN'
+                    color = (55, 255, 55)
+                    direction = directions_map['S']
+
+            elif keyboard.is_pressed('a'):
+                text = 'LEFT'
+                color = (55, 155, 255)
+                direction = directions_map['A']
+            elif keyboard.is_pressed('d'):
+                text = 'RIGHT'
+                color = (55, 155, 255)
+                direction = directions_map['D']
+
             else:
-                text = 'STRAIGHT'
-                color = (55, 255, 55)
-                direction = directions_map['W']
+                continue
 
-        elif keyboard.is_pressed('s'):
-            if keyboard.is_pressed('s+a'):
-                text = 'DOWN+LEFT'
-                color = (255, 155, 155)
-                direction = directions_map['SA']
-            elif keyboard.is_pressed('s+d'):
-                text = 'DOWN+RIGHT'
-                color = (255, 155, 155)
-                direction = directions_map['SD']
-            else:
-                text = 'DOWN'
-                color = (55, 255, 55)
-                direction = directions_map['S']
-
-        elif keyboard.is_pressed('a'):
-            text = 'LEFT'
-            color = (55, 155, 255)
-            direction = directions_map['A']
-        elif keyboard.is_pressed('d'):
-            text = 'RIGHT'
-            color = (55, 155, 255)
-            direction = directions_map['D']
-
-        else:
-            continue
 
         agent_direction = agent_choice(agent_model, p_agent)  # ready on device
-        user_direction = torch.tensor(direction).to(params['DEVICE'])
+        if is_it_windows:
+            user_direction = torch.tensor(direction).to(params['DEVICE'])
+        else:
+            user_direction = torch.tensor(np.random.randint(8)).to(params['DEVICE'])
+
         agent_direction = agent_direction.squeeze()
 
         p_user, r_user = get_next_state(users_model, stone_classifier, p_user,
@@ -150,9 +162,17 @@ def demo_app():
         p_agent_img = cv2.resize(p_agent_img, (96*4, 96*4), interpolation=cv2.INTER_NEAREST)
 
         rectangle = p_user_img.copy()
-        cv2.rectangle(rectangle, (0, 0), (190, 30), (0, 0, 0), -1)
+        if is_it_windows:
+            cv2.rectangle(rectangle, (0, 0), (190, 30), (0, 0, 0), -1)
+        else:
+            cv2.rectangle(rectangle, (0, 0), (230, 30), (0, 0, 0), -1)
+
         p_user_img = cv2.addWeighted(rectangle, 0.6, p_user_img, 0.4, 0)
-        cv2.putText(p_user_img, f'User reward: {str(reward_user)}', (8, 18), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+
+        if is_it_windows:
+            cv2.putText(p_user_img, f'User reward: {str(reward_user)}', (8, 18), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+        else:
+            cv2.putText(p_user_img, f'Random agent reward: {str(reward_user)}', (8, 18), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
 
         # -------------------
 
@@ -168,4 +188,7 @@ def demo_app():
         game_img = game_img[..., ::-1]
 
         cv2.imshow('Play the game (wasd)!', game_img)
-        cv2.waitKey(1)
+        if is_it_windows:
+            cv2.waitKey(1)
+        else:
+            cv2.waitKey(0)
