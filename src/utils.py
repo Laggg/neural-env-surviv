@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import torch
 import torch.nn.functional as F
 
+from torchvision.transforms import transforms
 from constants import DATA_DIR, WEIGHTS_DIR
 
 
@@ -37,7 +38,7 @@ def load_image(video, frame):
 
 
 def load_model(model, model_name, device='cpu'):
-    model.load_state_dict(torch.load(f'{WEIGHTS_DIR}/{model_name}.pth'))
+    model.load_state_dict(torch.load(f'{WEIGHTS_DIR}/{model_name}.pth', map_location=device))
     model = model.to(device)
     model.eval()
     return model
@@ -66,7 +67,7 @@ def apply_aug(p0, aug):
     return p
 
 
-def get_next_state(model, p, d, sp, zoom, n):
+def get_next_state(model, stone_cls, p, d, sp, zoom, n, reward_confidence):
     """
     input params (on pre-chosen device):
         model - in gpu in eval mode
@@ -78,17 +79,25 @@ def get_next_state(model, p, d, sp, zoom, n):
     output params:
         p - next state frame with variables in [-1, 1]
     """
-    p = torch.clone(p)  #.to(device)
+    p = torch.clone(p)
     d = F.one_hot(d, num_classes=8)
 
     # (1, 11)
     dd2 = torch.cat([d.unsqueeze(0),
                      sp.unsqueeze(0),
                      zoom.unsqueeze(0),
-                     n.unsqueeze(0)], dim=1).float()  #.to(device)
+                     n.unsqueeze(0)], dim=1).float()
     with torch.no_grad():
         p = model((p.unsqueeze(0), dd2))[0]
-    return p
+
+    reward_frame_transform = transforms.Compose([transforms.CenterCrop(24)])
+    state = reward_frame_transform(p)   #.to(device)
+    state = state[None]
+    with torch.no_grad():
+        r = stone_cls(state)[:, 1]
+    r = (r > reward_confidence).float().detach()#.cpu()
+
+    return p, r
 
 
 def set_device(device: str):

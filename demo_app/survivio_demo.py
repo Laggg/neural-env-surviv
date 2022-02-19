@@ -7,7 +7,7 @@ import cv2
 import torch
 from albumentations.pytorch import ToTensorV2
 
-from src.models import ResNetUNetV2, DQN
+from src.models import ResNetUNetV2, DQN, StoneClassifier
 from src.neural_env import NeuralEnv, inference_agent, agent_choice
 
 from src.utils import (load_image, set_device,
@@ -27,8 +27,13 @@ def demo_app():
     dg = dg[dg['video'] == 'RU2h8oKpuZA']   # DEBUG
     dg = dg[dg.zoom == 1].reset_index()
 
+    agent_icon = cv2.imread(f'{DATA_DIR}/DefaultSurvivr39.png')
+    cv2.imshow()
+
+
     users_model = load_model(ResNetUNetV2(3), 'resunet_v5', device=params['DEVICE'])
     agent_model = load_model(DQN(), 'dqn_v7', device=params['DEVICE'])
+    stone_classifier = load_model(StoneClassifier(), 'nostone_stone_classifier_v2', device=params['DEVICE'])
 
     # preprocess data
     i = 10
@@ -41,6 +46,9 @@ def demo_app():
     sp = torch.tensor([dg['sp'][i]]).to(params['DEVICE'])/100
     zoom = torch.tensor([dg['zoom'][i]]).to(params['DEVICE'])/15
     n = torch.tensor([4]).to(params['DEVICE'])/14
+
+    reward_user = 0
+    reward_agent = 0
 
     train_aug = A.Compose([A.Normalize(mean=(0.5,), std=(0.5,)),
                            ToTensorV2(transpose_mask=False),
@@ -66,7 +74,7 @@ def demo_app():
     logging.info('To close the game press "e"')
 
     while True:
-        cv2.waitKey(100)
+        # time.sleep(0.1)
         color = (255, 255, 255)
         text = 'UNKNOWN'
 
@@ -120,50 +128,42 @@ def demo_app():
         user_direction = torch.tensor(direction).to(params['DEVICE'])
         agent_direction = agent_direction.squeeze()
 
-        p_user = get_next_state(users_model, p_user, user_direction, sp, zoom, n)
-        p_agent = get_next_state(users_model, p_agent, agent_direction, sp, zoom, n)
+        p_user, r_user = get_next_state(users_model, stone_classifier, p_user,
+                                             user_direction, sp, zoom, n,
+                                             params['reward_confidence'])
+        p_agent, r_agent = get_next_state(users_model, stone_classifier, p_agent,
+                                               agent_direction, sp, zoom, n,
+                                               params['reward_confidence'])
 
-        game_img = torch.cat([p_user.permute(1, 2, 0), p_agent.permute(1, 2, 0)], dim=1).detach().cpu().numpy() / 2 + 0.5
-        game_img = (game_img*255).astype(np.uint8)
-        game_img = cv2.resize(game_img, (96*8, 96*4), interpolation=cv2.INTER_NEAREST)
+        reward_user += int(r_user.item())
+        reward_agent += int(r_agent.item())
+
+        p_user_img = p_user.permute(1, 2, 0).detach().cpu().numpy() / 2 + 0.5
+        p_agent_img = p_agent.permute(1, 2, 0).detach().cpu().numpy() / 2 + 0.5
+        p_user_img = (p_user_img*255).astype(np.uint8)
+        p_agent_img = (p_agent_img*255).astype(np.uint8)
+        p_user_img = cv2.resize(p_user_img, (96*4, 96*4), interpolation=cv2.INTER_NEAREST)
+        p_agent_img = cv2.resize(p_agent_img, (96*4, 96*4), interpolation=cv2.INTER_NEAREST)
+
+        rectangle = p_user_img.copy()
+        cv2.rectangle(rectangle, (0, 0), (190, 30), (0, 0, 0), -1)
+        p_user_img = cv2.addWeighted(rectangle, 0.6, p_user_img, 0.4, 0)
+        cv2.putText(p_user_img, f'User reward: {str(reward_user)}', (8, 18), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+
+        # -------------------
+
+        rectangle = p_agent_img.copy()
+        cv2.rectangle(rectangle, (0, 0), (190, 30), (0, 0, 0), -1)
+        p_agent_img = cv2.addWeighted(rectangle, 0.6, p_agent_img, 0.4, 0)
+        cv2.putText(p_agent_img, f'Agent reward: {str(reward_agent)}', (8, 18), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+
+        p_user_img[46*4:50*4, 46*4:50*4, :] = np.ones((4*4, 4*4, 3)).astype(np.uint8) * 255
+        p_agent_img[46*4:50*4, 46*4:50*4, :] = np.ones((4*4, 4*4, 3)).astype(np.uint8) * 255
+        game_img = np.hstack((p_user_img, p_agent_img))
         game_img = game_img[..., ::-1]
 
-
-        # s_curr, supp_curr, reward, act = inference_agent(q_model,
-        #                                                  env,
-        #                                                  torch.rot90(s_curr, 0, [1, 2]),
-        #                                                  supp_curr,
-        #                                                  device=params['DEVICE'])
-        # s_current = s_curr.squeeze(0)
-        # q_model_action = list(directions_map.keys())[act]
-
-
-        # img = p.permute(1, 2, 0).detach().cpu().numpy() / 2 + 0.5
-        # img = cv2.resize(img, (96*4, 96*4), interpolation=cv2.INTER_NEAREST)
-        # img = img[..., ::-1]
-        # img = (img*255).astype(np.uint8)
-        #
-        # rectangle = img.copy()
-        # cv2.rectangle(rectangle, (0, 0), (190, 30), (0, 0, 0), -1)
-        # img = cv2.addWeighted(rectangle, 0.6, img, 0.4, 0)
-        # cv2.putText(img, 'Action:', (8, 18), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (255, 255, 255), 1)
-        # cv2.putText(img, text, (80, 18), cv2.FONT_HERSHEY_SIMPLEX, 0.4, color, 1)
-        #
-        # # ----- q_model predictions -----
-        # img_q_model = s_current.permute(1, 2, 0).detach().cpu().numpy() / 2 + 0.5
-        # img_q_model = cv2.resize(img_q_model, (96*4, 96*4), interpolation=cv2.INTER_NEAREST)
-        # img_q_model = img_q_model[..., ::-1]
-        # img_q_model = (img_q_model*255).astype(np.uint8)
-        #
-        # rectangle = img_q_model.copy()
-        # cv2.rectangle(rectangle, (0, 0), (190, 30), (0, 0, 0), -1)
-        # img_q_model = cv2.addWeighted(rectangle, 0.6, img_q_model, 0.4, 0)
-        # cv2.putText(img_q_model, 'Action:', (8, 18), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (255, 255, 255), 1)
-        # cv2.putText(img_q_model, q_model_action, (80, 18), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (255, 255, 255), 1)
-        #
         # # сделать reset
         # # сделать rl агента справа (concat)
         #
-        # game_img = np.hstack((img, img_q_model))
         cv2.imshow('Play the game (wasd)!', game_img)
         cv2.waitKey(1)
