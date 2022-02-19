@@ -32,12 +32,12 @@ In all our experiments **environment state is the RGB frame**. The development o
 - [x] 6. интерактивный фронт для взаимодействия человека с нейронным движком (чтобы можно было поиграть игру, движком которой была бы нейронка)
 
 Сравнение генеративных моделей **S_next=model(S_curr,action)** (слева направо):
-    - кадр старта
-    - Loss = 0\*Lgan + MSE
-    - Loss = 0\*Lgan + MSE + PL/100
-    - Loss = 0\*Lgan + MAE + PL/100
-    - Loss = 0\*Lgan + 3\*MAE + PL/100 (пока самая лучшая)
-    - Loss = Lgan/100 + 3\*MAE + PL/100 (pix2pix)
+  - кадр старта
+  - Loss = 0\*Lgan + MSE
+  - Loss = 0\*Lgan + MSE + PL/100
+  - Loss = 0\*Lgan + MAE + PL/100
+  - Loss = 0\*Lgan + 3\*MAE + PL/100 (пока самая лучшая)
+  - Loss = Lgan/100 + 3\*MAE + PL/100 (pix2pix)
  
 <div align="center">
  
