@@ -24,6 +24,37 @@ In all our experiments **environment state is the RGB frame**. The development o
 We present an interactive demo application to demonstrate the work of a neural engine with the ability to control the movement of the agent by the user. Moreover, in this application, the user can watch the game of a trained RL agent. Main goal our bot - to run up to all the stones that fall into his field of vision. Anyone can run interactive demo application on their machine (see below installation guides).
 
 <details>
+  <summary>Windows installation guides</summary>
+  
+  #### *Initial usage*
+  __1. In anaconda prompt: dowland or clone this GitHub repository__ 
+  __2. Create python virtual environment and install requirements.txt__
+  
+  ```
+  cd neural_env_surviv
+  python -m venv survivio_venv
+  source survivio_venv/bin/activate
+  python -m pip install -r requirements.txt
+  ```
+  
+  __3. Run the agent__
+  ```
+  python run_demo.py
+  ```
+  
+  #### *Later usage*
+  __1. Activate python environment__
+  ```
+  source survivio_venv/bin/activate
+  ``` 
+
+  __2. Run the agent__
+  ```
+  python run_demo.py
+  ```
+</details>
+
+<details>
   <summary>Ubuntu\MacOS installation guides</summary>
   
   #### *Initial usage*
