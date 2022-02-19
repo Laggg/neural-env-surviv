@@ -59,7 +59,9 @@ We present an interactive demo application to demonstrate the work of a neural e
   ```
 </details>
 
-### DL experiments
+
+<details>
+  <summary>### DL experiments</summary>
 - [x] 1. generative models without GAN
 - [x] 2. generative models with GAN (pix2pix)
 - [x] 3. VQ-VAE/[GameGAN](https://nv-tlabs.github.io/gameGAN/)/[Dreamer2](https://youtu.be/o75ybZ-6Uu8?t=2)
@@ -81,3 +83,4 @@ We present an interactive demo application to demonstrate the work of a neural e
 ![](demo/gif_dir6.gif)
 
 </div>
+</details>
