@@ -16,8 +16,7 @@
 
 1. Игра surviv.io не имеет окружения, в котором можно было бы обучить RL-агента. Окружение, оно же environment - функция, принимающая в себя текущее состояние среды и действие агента, а возвращающая - следующее состояние и награду. Т.е. State_next,Reward=ENV(State_curr,Action).
 2. Идея - создать модель, выполняющую функции окружения, которая предсказывала бы следующий кадр, если известен текущий кадр и действие агента, т.е. State_next = MODEL(State_curr,Action). Награду отдельно можно захардкодить, это не проблема.
-3. Идея не нова, существует статья/модель [GameGAN](https://nv-tlabs.github.io/gameGAN/) и [Dreamer2](https://youtu.be/o75ybZ-6Uu8?t=2).
-4. Сравнение генеративных моделей **S_next=model(S_curr,action)** (слева направо):
+3. Сравнение генеративных моделей **S_next=model(S_curr,action)** (слева направо):
     - кадр старта
     - Loss = 0\*Lgan + MSE
     - Loss = 0\*Lgan + MSE + PL/100
@@ -36,7 +35,7 @@
 #### План работ:
 - [x] 1. generative models without GAN
 - [x] 2. generative models with GAN (pix2pix)
-- [x] 3. VQ-VAE/GameGan/Dreamer2 
+- [x] 3. VQ-VAE/[GameGAN](https://nv-tlabs.github.io/gameGAN/)/[Dreamer2](https://youtu.be/o75ybZ-6Uu8?t=2)
 - [x] 4. additional [losses](https://www.youtube.com/watch?v=nUjIG41M8fM), /mssim/style-texture loss/perceptual path length/
 - [x] 5. **RL** для приближения агента к кустам/камням/луту (в зависимости от качества нейронного движка)
 - [x] 6. интерактивный фронт для взаимодействия человека с нейронным движком (чтобы можно было поиграть игру, движком которой была бы нейронка)
