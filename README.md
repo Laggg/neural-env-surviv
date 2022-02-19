@@ -14,7 +14,7 @@
 
 <div align="center">
   
-## Создать нейронный энвайрмент игры для обучения RL агента на основе реплеев - экспертных траекторий
+## Modeling a neural environment for training an RL-agent based on replays (export trajectories)
   
 </div>
 
