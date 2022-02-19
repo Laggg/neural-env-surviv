@@ -29,12 +29,11 @@ We present an interactive demo application to demonstrate the work of a neural e
   #### *Initial usage*
   __1. In anaconda prompt: dowland or clone this GitHub repository__
   
-  __2. Create python virtual environment and install requirements.txt__
+  __2. Create python virtual environment and install requirements__
   
   ```
-  cd neural_env_surviv
-  python -m venv survivio_venv
-  source survivio_venv/bin/activate
+  conda create -n survivio_venv python=3.8
+  conda activate survivio_venv
   python -m pip install -r requirements.txt
   ```
   
@@ -73,6 +72,13 @@ We present an interactive demo application to demonstrate the work of a neural e
   source survivio_venv/bin/activate
   python -m pip install -r requirements.txt
   ```
+  
+    <details>
+    <summary>possible issues: </summary>
+    
+    Issue: You are using pip version 19.0.3, however version 22.0.3 is available
+    Solution: You should consider upgrading via the 'pip install --upgrade pip' command
+  </details>
   
   __3. Run the agent__
   ```
