@@ -42,21 +42,21 @@ We present an interactive demo application to demonstrate the work of a neural e
   python -m pip install -r requirements.txt
   ```
   
-  __4. Run the agent__
+  __3. Run the agent__
   ```
-  python play.py
+  python run_demo.py
   ```
   
   ## Later usage
 
   __1. Activate python environment__
   ```
-  source surviv_env/bin/activate
+  source survivio_venv/bin/activate
   ``` 
 
   __2. Run the agent__
   ```
-  python play.py
+  python run_demo.py
   ```
 </details>
 
