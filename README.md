@@ -26,7 +26,7 @@ We present an interactive demo application to demonstrate the work of a neural e
 <details>
   <summary>Ubuntu\MacOS installation guides</summary>
   
-  #### Initial usage
+  #### *Initial usage*
   __1. Clone GitHub repository__
   
   ```
@@ -47,8 +47,7 @@ We present an interactive demo application to demonstrate the work of a neural e
   python run_demo.py
   ```
   
-  #### Later usage
-
+  #### *Later usage*
   __1. Activate python environment__
   ```
   source survivio_venv/bin/activate
