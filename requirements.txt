@@ -3,7 +3,7 @@ requests
 opencv-python==4.5.5.62
 opencv-contrib-python==4.5.5.62
 albumentations==1.1.0
-torch==1.10.2+cu113
+torch==1.10.2
 torchvision==0.11.3+cu113
 matplotlib==3.5.1
 
