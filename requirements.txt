@@ -1,6 +1,5 @@
 -f https://download.pytorch.org/whl/cu113/torch_stable.html
 requests
-pandas==1.4.1
 opencv-python==4.5.5.62
 opencv-contrib-python==4.5.5.62
 albumentations==1.1.0
