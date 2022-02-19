@@ -1,7 +1,13 @@
+import platform
+if 'wind' in platform.architecture()[1].lower():
+    is_it_windows = True
+    import keyboard
+else:
+    is_it_windows = False
+
 import logging
 import os
 import albumentations as A
-import keyboard
 import numpy as np
 import cv2
 import torch
@@ -20,12 +26,6 @@ logging.getLogger().setLevel(logging.INFO)
 params = {'DEVICE': set_device('cuda:0'),
           'BATCH': 1,
           'reward_confidence': 0.95}
-
-import platform
-if 'wind' in platform.architecture()[1].lower():
-    is_it_windows = True
-else:
-    is_it_windows = False
 
 
 def demo_app():
