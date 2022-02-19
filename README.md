@@ -18,7 +18,10 @@ Game [surviv.io](https://surviv.io/) does not have any environment in which it w
 
 Our DL models perform all required features of the real game environment needed for training RL-agents locomotion. For an example of using a neural environment, we present a trained DN RL agent who aims to run up to all the stones that fall into his field of vision. We will use this proof-of-concept technology to train our agent to loot vital items.
 
+### Motivation
 In all our experiments **environment state is the RGB frame**. The development of this technology will allow some designed robots to be trained in cooking/cleaning/repairing with huge video information from YouTube and twitch.
+
+### DL experiments
 
 3. Сравнение генеративных моделей **S_next=model(S_curr,action)** (слева направо):
     - кадр старта
