@@ -155,14 +155,12 @@ def inference_agent(model, env, s_init, supp_init, device='cpu'):
     """
     model.eval()
     s_curr = s_init.clone().unsqueeze(0).to(device)
-    print(f'1: {s_curr.size()=}')
 
     supp_curr = supp_init.clone().unsqueeze(0)
 
     with torch.no_grad():
         act = torch.argmax(model(s_curr), dim=1)
     s_curr, supp_curr, reward = env.step(s_curr, supp_curr, act)
-    print(f'2: {s_curr.size()=}')
 
     return s_curr, supp_curr, reward, act
 
