@@ -104,20 +104,20 @@ We present an interactive demo application to demonstrate the work of a neural e
 ### Our DL experiments
 <details>
   <summary>experiments demo</summary>
-  - [x] 1. generative models without GAN
-  - [x] 2. generative models with GAN (pix2pix)
-  - [x] 3. VQ-VAE/[GameGAN](https://nv-tlabs.github.io/gameGAN/)/[Dreamer2](https://youtu.be/o75ybZ-6Uu8?t=2)
-  - [x] 4. additional [losses](https://www.youtube.com/watch?v=nUjIG41M8fM), /mssim/style-texture loss/perceptual path length/
-  - [x] 5. **RL** для приближения агента к кустам/камням/луту (в зависимости от качества нейронного движка)
-  - [x] 6. интерактивный фронт для взаимодействия человека с нейронным движком (чтобы можно было поиграть игру, движком которой была бы нейронка)
+    - [x] 1. generative models without GAN
+    - [x] 2. generative models with GAN (pix2pix)
+    - [x] 3. VQ-VAE/[GameGAN](https://nv-tlabs.github.io/gameGAN/)/[Dreamer2](https://youtu.be/o75ybZ-6Uu8?t=2)
+    - [x] 4. additional [losses](https://www.youtube.com/watch?v=nUjIG41M8fM), /mssim/style-texture loss/perceptual path length/
+    - [x] 5. **RL** для приближения агента к кустам/камням/луту (в зависимости от качества нейронного движка)
+    - [x] 6. интерактивный фронт для взаимодействия человека с нейронным движком (чтобы можно было поиграть игру, движком которой была бы нейронка)
 
-  Сравнение генеративных моделей **S_next=model(S_curr,action)** (слева направо):
-    - init state (RGB frame)
-    - Loss = 0\*Lgan + MSE
-    - Loss = 0\*Lgan + MSE + PL/100
-    - Loss = 0\*Lgan + MAE + PL/100
-    - Loss = 0\*Lgan + 3\*MAE + PL/100 (best, in DemoApp)
-    - Loss = Lgan/100 + 3\*MAE + PL/100 (pix2pix)
+    Сравнение генеративных моделей **S_next=model(S_curr,action)** (слева направо):
+      - init state (RGB frame)
+      - Loss = 0\*Lgan + MSE
+      - Loss = 0\*Lgan + MSE + PL/100
+      - Loss = 0\*Lgan + MAE + PL/100
+      - Loss = 0\*Lgan + 3\*MAE + PL/100 (best, in DemoApp)
+      - Loss = Lgan/100 + 3\*MAE + PL/100 (pix2pix)
  
 <div align="center">
  
