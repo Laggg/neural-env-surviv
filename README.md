@@ -1,6 +1,7 @@
 <div align="center">
   
 ![](demo/prod_demo_game.gif)
+![](demo/prod_demo_game2.gif)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
   
