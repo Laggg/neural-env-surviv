@@ -81,13 +81,6 @@ We present an interactive demo application to demonstrate the work of a neural e
   python -m pip install -r requirements.txt
   ```
   
-    <details>
-      <summary>possible issues: </summary>
-
-      Issue: You are using pip version 19.0.3, however version 22.0.3 is available1
-      Solution: You should consider upgrading via the 'pip install --upgrade pip' command
-    </details>
-  
   __3. Run the agent__
   ```
   python run_demo.py
