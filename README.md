@@ -31,7 +31,7 @@ We present an interactive demo application to demonstrate the work of a neural e
   <summary>Windows installation guides</summary>
   
   
-  **For windows users we offer to compete with our RL bot. Main goal is to collect a reward for running up to the stones at the frame for the same number of steps. Good luck, have FUN!**
+  **For windows users we offer to compete with our RL bot. Main goal is to collect a reward for running up to the stones at the frame for the same number of steps. Good luck, have fun!**
   
   ![](demo/demo_on_wind.png)
   
@@ -65,6 +65,8 @@ We present an interactive demo application to demonstrate the work of a neural e
 
 <details>
   <summary>Ubuntu\MacOS installation guides</summary>
+  
+    **For ubuntu\macOS users we offer to compare a random agent with our trained RL bot. Main goal is to collect a reward for running up to the stones at the frame for the same number of steps. Good luck, have fun!**
   
   ![](demo/demo_on_linx.png)
   
