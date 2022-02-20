@@ -122,7 +122,7 @@ We present an interactive demo application to demonstrate the work of a neural e
 
 </div>
   
-    Другие эксперименты для generative models without GAN:
+    Другие эксперименты для generative models without GAN (плашки гифок слева направо):
       - 3*MAE+PL/100+1*SSIM
       - 3*MAE+PL/100+1*LPIPS
       - 3*MAE+PL/100+PieAPP(stride=10)/4
