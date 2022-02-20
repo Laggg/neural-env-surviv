@@ -131,6 +131,13 @@ We present an interactive demo application to demonstrate the work of a neural e
       - 3*MAE+PL/100+2*SSIM (веса утеряны, метрики хуже)
       - 3*MAE+PL/100+3*DISTS (веса утеряны, метрики хуже)
   
+<div align="center">
+ 
+![](demo/gif_dir4.gif)
+![](demo/gif_dir8.gif)
+
+</div>
+  
   - [x] 1. generative models without GAN
   - [x] 2. generative models with GAN (pix2pix)
   - [x] 3. VQ-VAE/[GameGAN](https://nv-tlabs.github.io/gameGAN/)/[Dreamer2](https://youtu.be/o75ybZ-6Uu8?t=2)
