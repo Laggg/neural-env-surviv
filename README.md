@@ -107,13 +107,13 @@ We present an interactive demo application to demonstrate the work of a neural e
 <details>
   <summary>experiments demo</summary>
 
-    Сравнение генеративных моделей **S_next=model(S_curr,action)** (слева направо):
+    Сравнение генеративных моделей S_next=model(S_curr,action) (слева направо):
       - init state (RGB frame)
       - Loss = 0\*Lgan + MSE
       - Loss = 0\*Lgan + MSE + PL/100
       - Loss = 0\*Lgan + MAE + PL/100
-      - Loss = 0\*Lgan + 3\*MAE + PL/100 (best, in DemoApp)
-      - Loss = Lgan/100 + 3\*MAE + PL/100 (pix2pix)
+      - Loss = 0\*Lgan + 3*MAE + PL/100 (best, in DemoApp)
+      - Loss = Lgan/100 + 3*MAE + PL/100 (pix2pix)
  
 <div align="center">
  
