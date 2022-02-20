@@ -115,21 +115,21 @@ We present an interactive demo application to demonstrate the work of a neural e
       - Loss = 0*Lgan + 3*MAE + PL/100 (best, in DemoApp)
       - Loss = Lgan/100 + 3*MAE + PL/100 (pix2pix)
   
-    Другие эксперименты для generative models without GAN:
-      - 3*MAE+PL/100+1*SSIM
-      - 3*MAE+PL/100+2*SSIM
-      - 3*MAE+PL/100+1*LPIPS
-      - 3*MAE+PL/100+3*DISTS
-      - 3*MAE+PL/100+PieAPP(stride=10)/4
-      - 3*MAE+PL/100+PieAPP(stride=7)/2
-      - 3*MAE+PL/100+2*HaarPSI
-  
 <div align="center">
  
 ![](demo/gif_dir3.gif)
 ![](demo/gif_dir6.gif)
 
 </div>
+  
+    Другие эксперименты для generative models without GAN:
+      - 3*MAE+PL/100+1*SSIM
+      - 3*MAE+PL/100+1*LPIPS
+      - 3*MAE+PL/100+PieAPP(stride=10)/4
+      - 3*MAE+PL/100+PieAPP(stride=7)/2
+      - 3*MAE+PL/100+2*HaarPSI
+      - 3*MAE+PL/100+2*SSIM (веса утеряны, метрики хуже)
+      - 3*MAE+PL/100+3*DISTS (веса утеряны, метрики хуже)
   
   - [x] 1. generative models without GAN
   - [x] 2. generative models with GAN (pix2pix)
