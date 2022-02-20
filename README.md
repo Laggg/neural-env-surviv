@@ -60,6 +60,8 @@ We present an interactive demo application to demonstrate the work of a neural e
   ```
 </details>
 
+![](demo/demo_on_linx.png)
+
 <details>
   <summary>Ubuntu\MacOS installation guides</summary>
   
