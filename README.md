@@ -3,7 +3,11 @@
 ![](demo/prod_demo_game.gif)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
+  
+[![os](https://img.shields.io/badge/Linux-passing-success)]()
+[![os](https://img.shields.io/badge/MacOS-passing-success)]()
+[![os](https://img.shields.io/badge/Windows-passing-success)]()
+  
 </div>
 
 <div align="center">
