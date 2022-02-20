@@ -103,7 +103,7 @@ We present an interactive demo application to demonstrate the work of a neural e
   ```
 </details>
 
-### Our DL experiments
+### Our DL CV experiments
 <details>
   <summary>experiments demo</summary>
 
@@ -139,9 +139,9 @@ We present an interactive demo application to demonstrate the work of a neural e
 </div>
   
   - [x] 1. generative models without GAN
-  - [x] 2. generative models with GAN (pix2pix)
-  - [x] 3. VQ-VAE/[GameGAN](https://nv-tlabs.github.io/gameGAN/)/[Dreamer2](https://youtu.be/o75ybZ-6Uu8?t=2)
-  - [x] 4. additional [losses](https://www.youtube.com/watch?v=nUjIG41M8fM), /mssim/style-texture loss/perceptual path length/
+  - [x] 2. additional [losses](https://www.youtube.com/watch?v=nUjIG41M8fM), /mssim/style-texture loss/perceptual path length/
+  - [x] 3. generative models with GAN (pix2pix) 
+  - [x] 4. VQ-VAE/[GameGAN](https://nv-tlabs.github.io/gameGAN/)/[Dreamer2](https://youtu.be/o75ybZ-6Uu8?t=2)
   - [x] 5. **RL** для приближения агента к кустам/камням/луту (в зависимости от качества нейронного движка)
   - [x] 6. интерактивный фронт для взаимодействия человека с нейронным движком (чтобы можно было поиграть игру, движком которой была бы нейронка)  
   
