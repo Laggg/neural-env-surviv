@@ -152,4 +152,4 @@ We present an interactive demo application to demonstrate the work of a neural e
 1. Dmitry Fomin (RL) ods: @dfomin tg: @dfomin
 2. Pavel Danilov (FD) ods: @Pavel tg: @KalabiYauu
 3. Dmitry Gaus   (CV) ods: @QwertyNice tg: @QwertyNice
-4. Klokov Alexey (CV), ods: @laggg tg: @laggg5
+4. Klokov Alexey (CV,RL), ods: @laggg tg: @laggg5
