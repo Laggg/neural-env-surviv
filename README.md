@@ -30,6 +30,8 @@ We present an interactive demo application to demonstrate the work of a neural e
 <details>
   <summary>Windows installation guides</summary>
   
+  For windows users we offer to compete with our RL bot. Main goal is to collect a reward for running up to the stones in the frame for the same number of steps. Good luck, have FUN!
+  
   ![](demo/demo_on_wind.png)
   
   #### *Initial usage*
