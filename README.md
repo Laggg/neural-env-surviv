@@ -65,7 +65,7 @@ We present an interactive demo application to demonstrate the work of a neural e
 <details>
   <summary>Ubuntu\MacOS installation guides</summary>
   
-  **For ubuntu\macOS users we offer to compare a random agent with our trained RL bot. Main goal is to collect a reward for running up to the stones at the frame for the same number of steps. Press any key to update agents state. Just watch and have fun!**
+  **For ubuntu\mac OS users we offer to compare a random agent with our trained Robot. Main goal agents is to collect a reward for running up to the stones at the frame for the same number of steps. Press any key to update agents states. Just watch and have fun!**
   
   ![](demo/demo_on_linx.png)
   
