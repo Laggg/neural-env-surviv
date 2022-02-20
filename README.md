@@ -148,7 +148,7 @@ We present an interactive demo application to demonstrate the work of a neural e
 </details>
 
 
-### Team
+### Team [Presentation](https://docs.google.com/presentation/d/176bLsm6STRzftdZm-Kvl76hQlraToL7J8sXfhbsi0wg/edit?usp=sharing)
 1. Dmitry Fomin (RL) ods: @dfomin tg: @dfomin
 2. Pavel Danilov (FD) ods: @Pavel tg: @KalabiYauu
 3. Dmitry Gaus   (CV) ods: @QwertyNice tg: @QwertyNice
