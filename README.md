@@ -105,7 +105,7 @@ We present an interactive demo application to demonstrate the work of a neural e
 
 ### Our DL CV experiments
 <details>
-  <summary>experiments demo</summary>
+  <summary>Experiments demo</summary>
 
     Сравнение генеративных моделей S_next=model(S_curr,action) (плашки гифок слева направо):
       - init state (RGB frame)
