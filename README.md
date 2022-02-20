@@ -68,7 +68,7 @@ We present an interactive demo application to demonstrate the work of a neural e
   
   **For ubuntu\mac OS users we offer to compare a random agent with our trained RL agent. Main goal agents is to collect a reward for running up to the stones at the frame for the same number of steps. Press any key to update agents states. Just watch and have fun!**
   
-  ![](demo/demo_on_linx.png)
+  ![](demo/demo_app_mac.gif)
   
   #### *Initial usage*
   __1. In terminal: clone GitHub repository__
