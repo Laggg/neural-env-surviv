@@ -54,7 +54,7 @@ We present an interactive demo application to demonstrate the work of a neural e
   #### *Later usage*
   __1. Activate python environment__
   ```
-  source survivio_venv/bin/activate
+  conda activate survivio_venv
   ``` 
 
   __2. Run the agent__
