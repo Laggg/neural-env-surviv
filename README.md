@@ -13,7 +13,7 @@
 
 <div align="center">
   
-*This repo is support for [a global project](https://github.com/Laggg/ml-bots-surviv.io) - to create a smart ML bot for a browser-based multiplayer online battle royale game [surviv.io](https://surviv.io/)*  
+*This repo is support for [a global project](https://github.com/Laggg/ml-bots-surviv.io) - to create a smart ML bot for a browser-based multiplayer battle royale game [surviv.io](https://surviv.io/)*  
   
 </div>
 
